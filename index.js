@@ -7,7 +7,6 @@ import initUtils from './modules/utils.js';
 const intents = [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
     bot = new Client({ disableMentions: 'everyone', intents: intents });
 
-
 (async function() {
     global.logger = logger;
     config();
