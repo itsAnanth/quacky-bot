@@ -3,6 +3,7 @@ const meta = [hasPermission, hasRole, hasId];
 function evalCommand(cmd, message) {
     const values = Object.values(cmd.useOnly);
     for (let i = 0; i < values.length; i++) {
+        if (values[i].length == 0) continue;
         for (let j = 0; j < values[i].length; j++)
             if (!meta[i](message.member, values[i][j])) return false;
     }

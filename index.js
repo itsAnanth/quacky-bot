@@ -2,6 +2,7 @@ import { config } from 'dotenv';
 import { Client, Intents } from 'discord.js';
 import logger from './modules/logger.js';
 import { handleEvents, handleCommands } from './modules/core/index.js';
+import initUtils from './modules/utils.js';
 
 const intents = [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
     bot = new Client({ disableMentions: 'everyone', intents: intents });
@@ -10,6 +11,7 @@ const intents = [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLA
 (async function() {
     global.logger = logger;
     config();
+    initUtils();
     await handleCommands(bot);
     await handleEvents(bot);
 })();

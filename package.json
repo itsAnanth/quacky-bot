@@ -20,6 +20,7 @@
     "@keyvhq/keyv": "^1.0.0",
     "@keyvhq/keyv-mongo": "^1.0.0",
     "colors": "^1.4.0",
+    "delay": "^5.0.0",
     "discord.js": "^13.5.0",
     "dotenv": "^10.0.0"
   }
