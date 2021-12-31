@@ -18,9 +18,9 @@ function botHasPermission(message, values) {
 }
 
 function checkPermissions(message) {
-    const missingPerms = { user: message.author, color: 'RED', description: `Missing Bot Permission(s)\n${this.required.permissions.join(',').dCode().trim()}` };
+    if (!this.required.permissions || this.required.permissions.length == 0) return true;
     if (!botHasPermission(message, this.required.permissions)) {
-        message.replyEmbed(missingPerms);
+        message.replyEmbed(null, 'RED', `Missing Bot Permission(s) | ${this.required.permissions.join(',').trim().sCode()}`);
         return false;
     }
     return true;
