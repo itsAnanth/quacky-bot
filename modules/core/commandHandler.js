@@ -7,6 +7,7 @@ async function init(bot) {
     for (const folder of commandFolders) {
         const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
         for (const file of commandFiles) {
+            console.log(`../../commands/${folder}/${file}`);
             let command = await import(`../../commands/${folder}/${file}`);
             command = command.default;
             command.module = folder;
