@@ -16,17 +16,13 @@ export default {
 
         if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Missing user'));
         const user = await message.getMember(args[0]);
-        if (!user) return message.replyEmbed({ user: message.author, color: 'RED', description: 'Unknown User' });
+        if (!user) return message.replyEmbed(null, 'RED', 'Unknown User');
         const reason = args[1] ? args.slice(1, args.length).join(' ') : 'No Reason Provided';
-        const msgObj = { user: message.author, color: 'GREEN', description: `Kicked user \`${user.user.tag}\` with reason\n\`\`\`${reason}\`\`\``, footer: 'Logged response' };
         try {
             await user.kick(reason);
-        } catch (_) {
-            const m = { ...msgObj };
-            m.color = 'RED';
-            m.footer = '';
-            m.description = 'Missing Permission';
-            return message.replyEmbed(m);
+        } catch (e) {
+            console.log(e);
+            return message.replyEmbed(null, 'RED', `Could not kick the user | \`${e}\``);
         }
 
         const kickObj = {
@@ -36,7 +32,6 @@ export default {
             type: 'kick'
         };
         await db.utils.rapsheet.add(user.id, kickObj);
-        console.log(await db.utils.getRapsheet(user.id));
-        message.replyEmbed(msgObj);
+        message.replyEmbed(null, 'GREEN', `${user.user.tag} has been kicked | ${user.id}`);
     }
 };
