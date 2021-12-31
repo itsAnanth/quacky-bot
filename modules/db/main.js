@@ -23,6 +23,8 @@ class DBUtils {
     async warn(id, warnObj) {
         const res = await this.get(id);
         res.warns.push(warnObj);
+        warnObj.type = 'warn';
+        res.rapsheet.push(warnObj);
         await this.keyv.set(id, res);
         return res;
     }
