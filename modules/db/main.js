@@ -6,8 +6,13 @@ const db = new DBClient('main');
 class DBUtils {
 
     constructor(keyv) {
+        this.state = this;
         this.keyv = keyv;
+        this.rapsheet = {
+            add: this.r_add.bind(this.state)
+        };
     }
+
 
     async get(id) {
         let val = await this.keyv.get(id);
@@ -18,6 +23,14 @@ class DBUtils {
             };
         }
         return val;
+    }
+
+    async r_add(id, rObj) {
+        const res = await this.keyv.get(id);
+        console.log(res);
+        res.rapsheet.push(rObj);
+        await this.keyv.set(id, res);
+        return res;
     }
 
     async warn(id, warnObj) {
@@ -31,6 +44,10 @@ class DBUtils {
 
     async getWarns(id) {
         return (await this.get(id)).warns;
+    }
+
+    async getRapsheet(id) {
+        return (await this.get(id)).rapsheet;
     }
 
 }
