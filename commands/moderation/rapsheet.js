@@ -5,8 +5,8 @@ import { MessageEmbed } from 'discord.js';
 import Paginator from '../../modules/Paginator.js';
 import _Formatter from '../../modules/Formatter.js';
 export default {
-    name: 'warnlist',
-    aliases: ['warns'],
+    name: 'rapsheet',
+    aliases: ['rapsheet'],
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
@@ -15,9 +15,9 @@ export default {
         if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Missing user'));
         const user = await message.getMember(args[0]);
         if (!user) return message.reply('Unknown user');
-        const raw = await db.utils.getWarns(user.id);
+        const raw = await db.utils.getRapsheet(user.id);
 
-        const data = _Formatter.warns(raw);
+        const data = _Formatter.rapsheet(raw);
 
         const lastPage = Math.ceil(data.length / core['page-break']);
         const options = { author: message.author, current: 1, maxValues: data.length, max: lastPage, count: core['page-break'] };
@@ -26,7 +26,7 @@ export default {
             return { embeds: [new MessageEmbed()
                 .setAuthor({ name: `Total Case Logs: ${raw.length}` })
                 .setFooter({ text: `${dat.page} out of ${lastPage == 0 ? 1 : lastPage}` })
-                .setTitle(`${user.username}'s Warnlist`)
+                .setTitle(`${user.username}'s Rapsheet`)
                 .setColor(core.embed)
                 .setDescription(final.join('\n\u200b\n'))] }; // return embed
         });

@@ -13,15 +13,15 @@ export default {
         if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Missing user'));
         if (!args[1]) return message.reply(createEmbed(message.author, 'RED', 'Missing Reason'));
         const user = await message.getMember(args[0]);
-        if (!user) return message.replyEmbed({ user: message.author, color: 'RED', description: 'Unknown User' });
+        if (!user) return message.replyEmbed(null, 'RED', 'Unknown User');
         const reason = args[1] ? args.slice(1, args.length).join(' ') : 'No Reason Provided';
         const warnObj = {
             reason: reason,
             time: Date.now(),
-            author: message.author.id
+            author: message.author.id,
+            type: 'warn'
         };
-        const msgObj = { user: message.author, color: 'GREEN', description: `Warned user ${user.user.tag} with reason\n\`\`\`${reason}\`\`\``, footer: 'Logged response' };
         await db.utils.warn(user.id, warnObj);
-        message.replyEmbed(msgObj);
+        message.sendEmbed(null, 'GREEN', `<@${user.id}> has been **warned** | ${user.id.sCode()}`);
     }
 };
