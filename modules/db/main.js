@@ -26,9 +26,15 @@ class DBUtils {
     }
 
     async r_add(id, rObj) {
-        const res = await this.keyv.get(id);
-        console.log(res);
+        const res = await this.get(id);
         res.rapsheet.push(rObj);
+        await this.keyv.set(id, res);
+        return res;
+    }
+
+    async r_remove(id, index) {
+        const res = await this.get(id);
+        res.rapsheet.splice(index, 1);
         await this.keyv.set(id, res);
         return res;
     }
