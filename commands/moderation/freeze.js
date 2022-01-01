@@ -12,7 +12,8 @@ export default {
     useOnly: { permissions: [Permissions.FLAGS.MANAGE_CHANNELS], roles: [] },
     required: { permissions: [Permissions.FLAGS.MANAGE_CHANNELS] },
     execute: async function(message) {
-        const everyone = message.channel.guild.roles.everyone;
+        const everyone = message.guild.roles.cache.find(x => x.name.toLowerCase() == 'quack pack');
+        if (!everyone) return;
         const lockedChannels = [];
 
         const channels = message.guild.channels.cache.filter(x => x.type == 'GUILD_TEXT');

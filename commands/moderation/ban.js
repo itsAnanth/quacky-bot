@@ -31,11 +31,15 @@ export default {
             return message.replyEmbed(null, 'RED', `Unable to ban the user | \`${e}\``);
         }
 
+        const id = db.utils.rapsheet.getId(user.id);
+
+
         const kickObj = {
             reason: reason,
             time: Date.now(),
             author: message.author.id,
-            type: 'kick'
+            type: 'ban',
+            id: id
         };
         await db.utils.rapsheet.add(user.id, kickObj);
         message.replyEmbed(null, 'GREEN', `${user.user.tag} has been **banned** | ${user.id}`);

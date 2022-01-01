@@ -26,7 +26,7 @@ export default {
             return { embeds: [new MessageEmbed()
                 .setAuthor({ name: `Total Case Logs: ${raw.length}` })
                 .setFooter({ text: `${dat.page} out of ${lastPage == 0 ? 1 : lastPage}` })
-                .setTitle(`${user.username}'s Warnlist`)
+                .setTitle(`${user.user.username}'s Warnlist`)
                 .setColor(core.embed)
                 .setDescription(final.join('\n\u200b\n'))] }; // return embed
         });

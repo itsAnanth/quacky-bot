@@ -41,5 +41,12 @@ function hasId(member, value) {
     return member.id == value ? true : false;
 }
 
+function userHasPermission(message, values) {
+    for (let i = 0; i < values.length; i++)
+        if (!message.member.permissions.has(values[i])) return false;
+
+    return true;
+}
+
 export default evalCommand;
-export { botHasPermission, checkPermissions };
+export { botHasPermission, checkPermissions, userHasPermission };

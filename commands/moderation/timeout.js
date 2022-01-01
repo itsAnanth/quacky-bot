@@ -21,6 +21,8 @@ export default {
         if (time == null) return message.replyEmbed(null, 'RED', 'Invalid time argument');
         const reason = args[2] ? args.slice(2, args.length).join(' ') : 'No Reason Provided';
 
+        if (user.id == message.author.id) return message.replyEmbed(null, 'RED', 'You cannot mute yourself');
+
         try {
             await user.timeout(time, reason);
         } catch (e) {
@@ -28,12 +30,16 @@ export default {
             return;
         }
 
+        const id = await db.utils.rapsheet.getId(user.id);
+
+
         const muteObj = {
             reason: reason,
             time: Date.now(),
             duration: args[2],
             author: message.author.id,
-            type: 'timeout'
+            type: 'timeout',
+            id: id
         };
         if (time != 0) await db.utils.rapsheet.add(user.id, muteObj);
         message.replyEmbed(null, 'GREEN', `<@${user.id}> has been ${time == 0 ? 'unmuted' : 'timed out for ' + args[1]} | ${user.id.sCode()}`);

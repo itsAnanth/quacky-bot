@@ -27,6 +27,6 @@ export default {
             }
         } else
             message.channel.bulkDelete(count);
-        message.sendEmbed(null, 'GREEN', `Pruged ${args[0]} messages`);
+        message.sendEmbed(null, 'GREEN', `Purged ${args[0]} messages`);
     }
 };

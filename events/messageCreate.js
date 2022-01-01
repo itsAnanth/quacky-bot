@@ -1,9 +1,11 @@
 import { Collection, MessageEmbed } from 'discord.js';
 import { devs, core } from '../data/index.js';
 import evalCommand, { checkPermissions } from '../modules/evalCommand.js';
+import filter from '../modules/filter.js';
 export default {
     name: 'messageCreate',
     execute: async(bot, message) => {
+        if (await filter.execute(message)) message.delete();
         const cooldowns = new Collection();
         let maintenance;
         /** Ignores:

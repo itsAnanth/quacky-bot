@@ -7,7 +7,7 @@ function init() {
             .setDescription(description)
             .setColor(color ? color : 'GOLD')
             .setFooter({ text: footer ? footer : '' });
-        await this.send({ embeds: [embed], failIfNotExists: false }).catch(() => {});
+        return await this.send({ embeds: [embed], failIfNotExists: false }).catch(() => {});
     };
 
     Message.prototype.getMember = async function(string) {
@@ -29,22 +29,22 @@ function init() {
         return this.edit({ components: newRows });
     };
 
-    Message.prototype.sendEmbed = function(user, color, description, footer) {
+    Message.prototype.sendEmbed = async function(user, color, description, footer) {
         const embed = new MessageEmbed()
-            .setAuthor({ name: user ? user.username : this.author.username, iconURL: user ? user.avatarURL() : this.author.avatarURL() })
             .setDescription(description)
             .setColor(color ? color : 'GOLD')
             .setFooter({ text: footer ? footer : '' });
-        this.channel.send({ embeds: [embed], failIfNotExists: false }).catch(console.error);
+        if (user) embed.setAuthor({ name: user.username, iconURL: user.avatarURL() });
+        return await this.channel.send({ embeds: [embed], failIfNotExists: false }).catch(console.error);
     };
 
-    Message.prototype.replyEmbed = function(user, color, description, footer) {
+    Message.prototype.replyEmbed = async function(user, color, description, footer) {
         const embed = new MessageEmbed()
-            .setAuthor({ name: user ? user.username : this.author.username, iconURL: user ? user.avatarURL() : this.author.avatarURL() })
             .setDescription(description)
             .setColor(color ? color : 'GOLD')
             .setFooter({ text: footer ? footer : '' });
-        this.channel.send({ embeds: [embed], failIfNotExists: false }).catch(console.error);
+        if (user) embed.setAuthor({ name: user.username, iconURL: user.avatarURL() });
+        return await this.reply({ embeds: [embed], failIfNotExists: false }).catch(console.error);
     };
 
     String.prototype.dBold = function() {

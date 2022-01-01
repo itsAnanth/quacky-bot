@@ -15,7 +15,9 @@ class DBUtils {
         };
         this.filter = {
             get: this.filter_get.bind(this.state),
-            add: this.filter_add.bind(this.state)
+            add: this.filter_add.bind(this.state),
+            includes: this.filter_includes.bind(this.state),
+            remove: this.filter_remove.bind(this.state)
         };
     }
 
@@ -45,6 +47,17 @@ class DBUtils {
 
     async filter_get() {
         return (await this.get()).filter.words;
+    }
+
+    async filter_remove(word, index) {
+        const res = await this.get();
+        res.filter.words.splice(index, 1);
+        await this.keyv.set(core['server-db-cluster'], res);
+        return res;
+    }
+
+    async filter_includes(word) {
+        return (await this.get()).filter.words.find(x => x == word);
     }
 
     async filter_add(word) {

@@ -17,6 +17,7 @@ export default {
         if (!user) return message.reply('Unknown user');
         const raw = await db.utils.getRapsheet(user.id);
 
+        console.log(raw);
         const data = _Formatter.rapsheet(raw);
 
         const lastPage = Math.ceil(data.length / core['page-break']);
