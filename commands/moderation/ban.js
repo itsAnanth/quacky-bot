@@ -8,9 +8,9 @@ export default {
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
-    useOnly: { permissions: [Permissions.FLAGS.BAN_MEMBERS], roles: [] },
+    useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.BAN_MEMBERS] },
-    argMap: ['user', 'reason (optional)'],
+    staff: ['admin', 'mod'],
     execute: async function(message, args) {
         let user, isMember = true;
         if (!args[0]) return message.replyEmbed(null, 'RED', 'Missing argument | `user`');

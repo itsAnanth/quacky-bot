@@ -9,8 +9,9 @@ export default {
     cooldown: 0,
     descriptions: 'Mutes a user with reason, if any',
     excpectedArgs: `${core.prefix}mute [ID / @user] [time + s/m/h]`,
-    useOnly: { permissions: [Permissions.FLAGS.MODERATE_MEMBERS], roles: [] },
+    useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.MODERATE_MEMBERS] },
+    staff: ['helper', 'admin', 'mod'],
     execute: async function(message, args) {
         console.log(args);
         if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Missing user'));

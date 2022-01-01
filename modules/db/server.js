@@ -23,9 +23,9 @@ class DBUtils {
         };
         this.staff = {
             assign: this.staff_assign.bind(this.state),
-            getHelpers: this.staff_getHelpers.bind(this.state),
-            getMods: this.staff_getMods.bind(this.state),
-            getAdmins: this.staff_getAdmins.bind(this.state),
+            get_helper: this.staff_getHelpers.bind(this.state),
+            get_mod: this.staff_getMods.bind(this.state),
+            get_admin: this.staff_getAdmins.bind(this.state),
         };
     }
 
@@ -46,9 +46,9 @@ class DBUtils {
                     channelupdate: null
                 },
                 staff: {
-                    helpers: [],
-                    mods: [],
-                    admins: []
+                    helper: [],
+                    mod: [],
+                    admin: []
                 },
                 filter: {
                     whitelist: {
@@ -65,21 +65,30 @@ class DBUtils {
 
     async staff_assign(id, type) {
         const res = await this.get();
+        if (res.staff[`${type}`].includes(id)) return false;
+        res.staff[`${type}`]?.push(id);
+        await this.keyv.set(core['server-db-cluster'], res);
+        return true;
+    }
+
+    async staff_resign(id, type) {
+        const res = await this.get();
+        if (!res.staff[`${type}`].includes(id)) return false;
         res.staff[`${type}`]?.push(id);
         await this.keyv.set(core['server-db-cluster'], res);
         return true;
     }
 
     async staff_getHelpers() {
-        return (await this.get()).staff.helpers;
+        return (await this.get()).staff.helper;
     }
 
     async staff_getMods() {
-        return (await this.get()).staff.mods;
+        return (await this.get()).staff.mod;
     }
 
     async staff_getAdmins() {
-        return (await this.get()).staff.admins;
+        return (await this.get()).staff.admin;
     }
 
     async getWhitelistRole() {

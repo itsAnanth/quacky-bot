@@ -7,8 +7,9 @@ export default {
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
-    useOnly: { permissions: [Permissions.FLAGS.KICK_MEMBERS], roles: [] },
+    useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.KICK_MEMBERS] },
+    staff: ['admin', 'mod'],
     execute: async function(message, args) {
         if (!args[0]) return message.replyEmbed(null, 'RED', 'Missing argument | `user`');
         const user = await message.getMember(args[0]);

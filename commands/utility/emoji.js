@@ -1,5 +1,5 @@
 import { core } from '../../data/index.js';
-import { Formatters, MessageEmbed } from 'discord.js';
+import { Formatters } from 'discord.js';
 
 export default {
     name: 'emoji',
@@ -8,6 +8,7 @@ export default {
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
     useOnly: { permissions: [], roles: [] },
+    staff: ['admin', 'mod'],
     execute: async(message, args) => {
         if (!args[0]) return message.replyEmbed(null, 'RED', 'Missing argument | lock or unlock');
         const type = args[0].toLowerCase();

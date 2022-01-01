@@ -9,8 +9,9 @@ export default {
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
-    useOnly: { permissions: [Permissions.FLAGS.MANAGE_CHANNELS], roles: [] },
+    useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.MANAGE_CHANNELS] },
+    staff: ['admin', 'mod'],
     execute: async function(message) {
         const everyone = message.guild.roles.cache.find(x => x.name.toLowerCase() == 'quack pack');
         if (!everyone) return;
@@ -34,7 +35,7 @@ export default {
         const minimizedEmbed = new MessageEmbed()
             .setAuthor({ name: message.author.username, iconURL: message.author.avatarURL() })
             .setTitle('Server Thaw')
-            .setDescription(`Unocked ${unlockedChannels.length} channels`)
+            .setDescription(`Unlocked ${unlockedChannels.length} channels`)
             .setFooter({ text: 'Use the buttons below for details' });
         const maximizedEmbed = new MessageEmbed()
             .setAuthor({ name: message.author.username, iconURL: message.author.avatarURL() })

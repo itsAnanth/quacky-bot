@@ -8,6 +8,7 @@ export default {
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
     useOnly: { permissions: [], roles: [] },
+    staff: ['helper', 'admin', 'mod'],
     execute: async(message, args) => {
         let user, isMember = true;
         if (!args[0]) user = message.member;

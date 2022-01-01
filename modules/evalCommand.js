@@ -1,9 +1,12 @@
 import { Permissions } from 'discord.js';
+import Cache from './Cache.js';
+import db from './db/server.js';
 
 const meta = [hasPermission, hasRole, hasId];
 
 function evalCommand(cmd, message) {
     const values = Object.values(cmd.useOnly);
+    if (!cmd.useOnly) return true;
     for (let i = 0; i < values.length; i++) {
         if (values[i].length == 0) continue;
         for (let j = 0; j < values[i].length; j++)
@@ -11,6 +14,11 @@ function evalCommand(cmd, message) {
     }
     return true;
 }
+
+// function evalArgs(message, args) {
+//     if (args.length >= this.argMap.length) return true;
+//     return message.replyEmbed(null, 'RED', 'Missing arguments\nexpected arguments -> ')
+// }
 
 function botHasPermission(message, values) {
     for (let i = 0; i < values.length; i++)
@@ -41,6 +49,25 @@ function hasId(member, value) {
     return member.id == value ? true : false;
 }
 
+async function isStaff(cmd, message) {
+    // let allowed = [];
+    if (!cmd.staff || cmd.staff.length == 0) return true;
+    for (let i = 0; i < cmd.staff.length; i++) {
+        const cDat = Cache.get(cmd.staff[i]);
+        let curr;
+        if (cDat) {
+            curr = cDat;
+            console.log(curr);
+        } else curr = await db.utils.staff[`get_${cmd.staff[i]}`]();
+        // const curr = cDat ? cDat : await db.utils.staff[`get${cmd.staff[i]}`]();
+        if (curr.some(x => message.member.roles.cache.has(x))) return true;
+        // allowed = [...curr, ...allowed];
+    }
+    return false;
+    // return allowed.includes(message.member.id) ? true : false;
+}
+
+
 function userHasPermission(message, values) {
     for (let i = 0; i < values.length; i++)
         if (!message.member.permissions.has(values[i])) return false;
@@ -48,5 +75,6 @@ function userHasPermission(message, values) {
     return true;
 }
 
+
 export default evalCommand;
-export { botHasPermission, checkPermissions, userHasPermission };
+export { botHasPermission, checkPermissions, userHasPermission, isStaff };
