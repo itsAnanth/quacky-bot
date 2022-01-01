@@ -8,7 +8,7 @@ export default {
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
-    useOnly: { permissions: ['MANAGE_MESSAGES'], roles: [] },
+    useOnly: { permissions: [Permissions.FLAGS.MANAGE_MESSAGES], roles: [] },
     required: { permissions: [Permissions.FLAGS.MANAGE_MESSAGES] },
     execute: async function(message, args) {
         if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Invalid argument | Missing message count to purge'));

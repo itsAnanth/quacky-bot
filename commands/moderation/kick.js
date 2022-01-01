@@ -8,7 +8,7 @@ export default {
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
-    useOnly: { permissions: ['KICK_MEMBERS'], roles: [] },
+    useOnly: { permissions: [Permissions.FLAGS.KICK_MEMBERS], roles: [] },
     required: { permissions: [Permissions.FLAGS.KICK_MEMBERS] },
     execute: async function(message, args) {
         if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Missing user'));
