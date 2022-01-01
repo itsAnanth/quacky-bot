@@ -10,7 +10,7 @@ export default {
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
-    useOnly: { permissions: [], roles: ['b'], ids: [] },
+    useOnly: { permissions: [], roles: [], ids: [] },
     execute: async(message, args, bot) => {
         if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Missing user'));
         const user = await message.getMember(args[0]);

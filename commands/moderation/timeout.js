@@ -1,7 +1,7 @@
 import { core } from '../../data/index.js';
 import { createEmbed, parseTime } from '../../modules/messageUtils.js';
 import db from '../../modules/db/main.js';
-import { checkPermissions } from '../../modules/evalCommand.js';
+import { Permissions } from 'discord.js';
 
 export default {
     name: 'timeout',
@@ -9,10 +9,10 @@ export default {
     cooldown: 0,
     descriptions: 'Mutes a user with reason, if any',
     excpectedArgs: `${core.prefix}mute [ID / @user] [time + s/m/h]`,
-    useOnly: { permissions: ['BAN_MEMBERS'], roles: ['b'] },
-    required: { permissions: ['MODERATE_MEMBERS'] },
+    useOnly: { permissions: [Permissions.FLAGS.MODERATE_MEMBERS], roles: [] },
+    required: { permissions: [Permissions.FLAGS.MODERATE_MEMBERS] },
     execute: async function(message, args) {
-        if (!checkPermissions.apply(this, [message])) return;
+        console.log(args);
         if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Missing user'));
         if (!args[1]) return message.reply(createEmbed(message.author, 'RED', 'Missing time argument'));
         const user = await message.getMember(args[0]);

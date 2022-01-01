@@ -10,7 +10,7 @@ export default {
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
-    useOnly: { permissions: [], roles: ['b'], ids: [] },
+    useOnly: { permissions: [], roles: [], ids: [] },
     execute: async(message, args, bot) => {
         if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Missing user'));
         const user = await message.getMember(args[0]);
@@ -26,7 +26,7 @@ export default {
             return { embeds: [new MessageEmbed()
                 .setAuthor({ name: `Total Case Logs: ${raw.length}` })
                 .setFooter({ text: `${dat.page} out of ${lastPage == 0 ? 1 : lastPage}` })
-                .setTitle(`${user.username}'s Rapsheet`)
+                .setTitle(`${user.user.username}'s Rapsheet`)
                 .setColor(core.embed)
                 .setDescription(final.join('\n\u200b\n'))] }; // return embed
         });
