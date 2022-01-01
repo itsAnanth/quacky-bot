@@ -11,13 +11,21 @@ class DBUtils {
         this.channels = {
             lock: this.freeze.bind(this.state),
             unlock: this.thaw.bind(this.state),
-            get: this.getLockedChannels.bind(this.state)
+            get: this.getLockedChannels.bind(this.state),
         };
         this.filter = {
             get: this.filter_get.bind(this.state),
             add: this.filter_add.bind(this.state),
             includes: this.filter_includes.bind(this.state),
-            remove: this.filter_remove.bind(this.state)
+            remove: this.filter_remove.bind(this.state),
+            whitelistRole: this.filter_whitelist_role.bind(this.state),
+            getWhitelistRole: this.getWhitelistRole.bind(this.state)
+        };
+        this.staff = {
+            assign: this.staff_assign.bind(this.state),
+            getHelpers: this.staff_getHelpers.bind(this.state),
+            getMods: this.staff_getMods.bind(this.state),
+            getAdmins: this.staff_getAdmins.bind(this.state),
         };
     }
 
@@ -31,13 +39,22 @@ class DBUtils {
                     ban: null,
                     kick: null,
                     mute: null,
-                    messages: null,
-                    userjoin: null,
+                    message: null,
+                    join_leave: null,
                     userupdate: null,
                     roleupdate: null,
                     channelupdate: null
                 },
+                staff: {
+                    helpers: [],
+                    mods: [],
+                    admins: []
+                },
                 filter: {
+                    whitelist: {
+                        roles: [],
+                        ids: []
+                    },
                     words: []
                 }
             };
@@ -45,8 +62,44 @@ class DBUtils {
         return val;
     }
 
+
+    async staff_assign(id, type) {
+        const res = await this.get();
+        res.staff[`${type}`]?.push(id);
+        await this.keyv.set(core['server-db-cluster'], res);
+        return true;
+    }
+
+    async staff_getHelpers() {
+        return (await this.get()).staff.helpers;
+    }
+
+    async staff_getMods() {
+        return (await this.get()).staff.mods;
+    }
+
+    async staff_getAdmins() {
+        return (await this.get()).staff.admins;
+    }
+
+    async getWhitelistRole() {
+        return (await this.get()).filter.whitelist.roles;
+    }
+
     async filter_get() {
         return (await this.get()).filter.words;
+    }
+
+    async filter_whitelist_role(id, word) {
+        const res = await this.get();
+        const user = res.filter.whitelist.roles.find(x => x.role == id);
+        if (user && user.words.includes(word)) return false;
+        else if (user)
+            user.words.push(word);
+        else
+            res.filter.whitelist.roles.push({ role: id, words: [word] });
+        await this.keyv.set(core['server-db-cluster'], res);
+        return true;
     }
 
     async filter_remove(word, index) {
@@ -76,6 +129,10 @@ class DBUtils {
 
     async get_log(type) {
         return (await this.get()).log[type];
+    }
+
+    async log_channels() {
+        return (await this.get()).log;
     }
 
     async freeze(id) {
