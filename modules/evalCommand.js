@@ -1,3 +1,5 @@
+import { Permissions } from 'discord.js';
+
 const meta = [hasPermission, hasRole, hasId];
 
 function evalCommand(cmd, message) {
@@ -18,9 +20,10 @@ function botHasPermission(message, values) {
 }
 
 function checkPermissions(message) {
-    if (!this.required.permissions || this.required.permissions.length == 0) return true;
+    console.log(this);
+    if (!this.required || !this.required.permissions || this.required.permissions.length == 0) return true;
     if (!botHasPermission(message, this.required.permissions)) {
-        message.replyEmbed(null, 'RED', `Missing Bot Permission(s) | ${this.required.permissions.join(',').trim().sCode()}`);
+        message.replyEmbed(null, 'RED', `Missing Bot Permission(s) | ${this.required.permissions.reduce((a, c) => new Permissions(c).toArray().concat(a), []).join(', ').trim().sCode()}`);
         return false;
     }
     return true;

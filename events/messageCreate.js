@@ -1,6 +1,6 @@
 import { Collection, MessageEmbed } from 'discord.js';
 import { devs, core } from '../data/index.js';
-import evalCommand from '../modules/evalCommand.js';
+import evalCommand, { checkPermissions } from '../modules/evalCommand.js';
 export default {
     name: 'messageCreate',
     execute: async(bot, message) => {
@@ -50,6 +50,7 @@ export default {
             try {
                 message.timestamps = timestamps;
                 if (!evalCommand(command, message)) return;
+                if (!checkPermissions.apply(command, [message])) return;
                 command.execute(message, args, bot);
                 if (!command.manualStamp) timestamps.set(message.author.id, now);
             } catch (error) { console.log(error); }
