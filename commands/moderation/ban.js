@@ -10,6 +10,7 @@ export default {
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
     useOnly: { permissions: [Permissions.FLAGS.BAN_MEMBERS], roles: [] },
     required: { permissions: [Permissions.FLAGS.BAN_MEMBERS] },
+    argMap: ['user', 'reason (optional)'],
     execute: async function(message, args) {
         let user, isMember = true;
         if (!args[0]) return message.replyEmbed(null, 'RED', 'Missing argument | `user`');
