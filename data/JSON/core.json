@@ -1,4 +1,13 @@
 {
     "prefix": ".",
-    "page-break": 5
+    "page-break": 5,
+    "server-db-cluster": "1",
+    "timeouts": {
+        "lock&unlock": 20000
+    },
+    "punishments": {
+        "2": { "type": "mute", "duration": "1d" },
+        "3": { "type": "mute", "duration": "1w" },
+        "5": { "type": "ban" }
+    }
 }
