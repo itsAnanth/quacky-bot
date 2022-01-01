@@ -20,7 +20,8 @@ export default {
             const channel = channels.at(i);
             const permissions = channel.permissionsFor(everyone);
             const send_messages = permissions.has(Permissions.FLAGS.SEND_MESSAGES);
-            if (send_messages) {
+            const view_channel = permissions.has(Permissions.FLAGS.VIEW_CHANNEL);
+            if (view_channel && send_messages) {
                 try {
                     await channel.permissionOverwrites.create(everyone, {
                         SEND_MESSAGES: false
