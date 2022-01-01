@@ -7,7 +7,7 @@ export default {
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
-    useOnly: { permissions: ['BAN_MEMBERS'], roles: ['b'] },
+    useOnly: { permissions: [], roles: [] },
     execute: async(message, args) => {
         let user, isMember = true;
         if (!args[0]) user = message.member;
