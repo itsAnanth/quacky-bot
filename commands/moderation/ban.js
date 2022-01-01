@@ -1,7 +1,6 @@
+import { Permissions } from 'discord.js';
 import { core } from '../../data/index.js';
-import { createEmbed } from '../../modules/messageUtils.js';
 import db from '../../modules/db/main.js';
-import { checkPermissions } from '../../modules/evalCommand.js';
 
 export default {
     name: 'ban',
@@ -9,23 +8,27 @@ export default {
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
-    useOnly: { permissions: ['BAN_MEMBERS'], roles: [] },
-    required: { permissions: ['BAN_MEMBERS'] },
+    useOnly: { permissions: [Permissions.FLAGS.BAN_MEMBERS], roles: [] },
+    required: { permissions: [Permissions.FLAGS.BAN_MEMBERS] },
     execute: async function(message, args) {
-        if (!checkPermissions.apply(this, [message])) return;
         let user, isMember = true;
-        if (!args[0]) user = message.member;
-        else {
-            user = await message.getMember(args[0]);
-            if (user == null)
-                user = await message.getUser(args[0]);
+        if (!args[0]) return message.replyEmbed(null, 'RED', 'Missing argument | `user`');
+
+        user = await message.getMember(args[0]);
+        if (user == null) {
+            user = await message.getUser(args[0]);
+            isMember = false;
         }
+
+
+        if (isMember && !user.bannable) return message.replyEmbed(null, 'RED', 'Unable to ban the user');
+
         const reason = args[1] ? args.slice(1, args.length).join(' ') : 'No Reason Provided';
         try {
-            await user.ban({ reason: });
+            await user.ban({ reason: reason });
         } catch (e) {
             console.log(e);
-            return message.replyEmbed(null, 'RED', `Could not kick the user | \`${e}\``);
+            return message.replyEmbed(null, 'RED', `Unable to ban the user | \`${e}\``);
         }
 
         const kickObj = {
@@ -35,6 +38,6 @@ export default {
             type: 'kick'
         };
         await db.utils.rapsheet.add(user.id, kickObj);
-        message.replyEmbed(null, 'GREEN', `${user.user.tag} has been kicked | ${user.id}`);
+        message.replyEmbed(null, 'GREEN', `${user.user.tag} has been **banned** | ${user.id}`);
     }
 };
