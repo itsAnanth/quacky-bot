@@ -5,7 +5,7 @@ import { handleEvents, handleCommands } from './modules/core/index.js';
 import initUtils from './modules/utils.js';
 import Cache from './modules/Cache.js';
 
-const intents = [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MEMBERS],
+const intents = [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_VOICE_STATES],
     bot = new Client({ disableMentions: 'everyone', intents: intents });
 
 (async function() {
