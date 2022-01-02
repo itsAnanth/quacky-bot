@@ -7,7 +7,7 @@ export default {
     aliases: ['clear'],
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    excpectedArgs: `${core.prefix}purge [number]`,
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.MANAGE_MESSAGES] },
     staff: ['admin'],

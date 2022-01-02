@@ -9,16 +9,15 @@ export default {
     aliases: ['rapsheet'],
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    excpectedArgs: `${core.prefix}rapsheet [ID / @user]`,
     useOnly: { permissions: [], roles: [], ids: [] },
     staff: ['helper', 'admin', 'mod'],
-    execute: async(message, args, bot) => {
-        if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Missing user'));
+    execute: async function(message, args, bot) {
+        if (!args[0]) return message.reply(createEmbed(message.author, 'RED', `Error : Missing argument\n\`${this.excpectedArgs}\``));
         const user = await message.getMember(args[0]);
         if (!user) return message.reply('Unknown user');
         const raw = await db.utils.getRapsheet(user.id);
 
-        console.log(raw);
         const data = _Formatter.rapsheet(raw);
 
         const lastPage = Math.ceil(data.length / core['page-break']);

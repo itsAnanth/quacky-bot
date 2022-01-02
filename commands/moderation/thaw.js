@@ -17,7 +17,6 @@ export default {
         if (!everyone) return;
         const lockedChannels = await db.utils.channels.get();
         const unlockedChannels = [];
-        console.log(lockedChannels);
         for (let i = 0; i < lockedChannels.length; i++) {
             const channel = await message.guild.channels.cache.get(lockedChannels[i]);
             if (!channel) continue;

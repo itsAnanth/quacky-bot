@@ -6,12 +6,12 @@ export default {
     aliases: ['kick'],
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    excpectedArgs: `${core.prefix}kick [ID / @user] (reason | optional)`,
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.KICK_MEMBERS] },
     staff: ['admin', 'mod'],
     execute: async function(message, args) {
-        if (!args[0]) return message.replyEmbed(null, 'RED', 'Missing argument | `user`');
+        if (!args[0]) return message.replyEmbed(null, 'RED', `Error Missing argument\n\`${this.excpectedArgs}\``);
         const user = await message.getMember(args[0]);
         if (!user) return message.replyEmbed(null, 'RED', 'Unknown User');
         const reason = args[1] ? args.slice(1, args.length).join(' ') : 'No Reason Provided';

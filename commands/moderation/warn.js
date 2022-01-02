@@ -1,5 +1,4 @@
 import { core } from '../../data/index.js';
-import { createEmbed } from '../../modules/messageUtils.js';
 import db from '../../modules/db/main.js';
 import timeout from './timeout.js';
 import ban from './ban.js';
@@ -11,12 +10,12 @@ export default {
     aliases: ['warn'],
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    excpectedArgs: `${core.prefix}warn [ID / @user] (reason)`,
     useOnly: { permissions: [], roles: [] },
     staff: ['helper', 'mod', 'admin'],
-    execute: async(message, args) => {
-        if (!args[0]) return message.replyEmbed(null, 'RED', 'Missing user');
-        if (!args[1]) return message.replyEmbed(null, 'RED', 'Missing Reason');
+    execute: async function(message, args) {
+        if (!args[0]) return message.replyEmbed(null, 'RED', `**Error:** Missing user\n\`${this.excpectedArgs}\``);
+        if (!args[1]) return message.replyEmbed(null, 'RED', `**Error:** Missing Reason\n\`${this.excpectedArgs}\``);
         const user = await message.getMember(args[0]);
         if (!user) return message.replyEmbed(null, 'RED', 'Unknown User');
 

@@ -7,7 +7,7 @@ export default {
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
     useOnly: { permissions: [], roles: [], ids: [] },
-    staff: ['admin', 'mod'],
+    staff: ['admin'],
     execute: async(message, args) => {
         if (!args[0]) return message.replyEmbed(null, 'RED', 'Missing argument | `user`');
         if (!args[1]) return message.replyEmbed(null, 'RED', 'Missing argument | `case ID`');

@@ -6,15 +6,15 @@ export default {
     aliases: ['emoji'],
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    excpectedArgs: `${core.prefix}emoji [lock/unlock] [ID / @Role] [emoteID / emote]`,
     useOnly: { permissions: [], roles: [] },
     staff: ['admin', 'mod'],
-    execute: async(message, args) => {
-        if (!args[0]) return message.replyEmbed(null, 'RED', 'Missing argument | lock or unlock');
+    execute: async function(message, args) {
+        if (!args[0]) return message.replyEmbed(null, 'RED', `Missing argument\n\`${this.excpectedArgs}\``);
         const type = args[0].toLowerCase();
         if (!['lock', 'unlock'].includes(type)) return message.replyEmbed(null, 'RED', 'Invalid Action');
-        if (!args[1]) return message.replyEmbed(null, 'RED', 'Missing argument | Role to blacklist emoji');
-        if (!args[2]) return message.replyEmbed(null, 'RED', 'Missing argument | Emoji to lock');
+        if (!args[1]) return message.replyEmbed(null, 'RED', `Missing argument\n\`${this.excpectedArgs}\``);
+        if (!args[2]) return message.replyEmbed(null, 'RED', `Missing argument\n\`${this.excpectedArgs}\``);
 
         const emoteId = args[2].replace(/\D/g, '');
         const emote = message.guild.emojis.cache.get(emoteId);
