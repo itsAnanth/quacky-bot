@@ -17,7 +17,7 @@ export default {
         const typeOnlyCmd = allCommands.filter(x => x.staff?.includes(type));
 
 
-        const data = typeOnlyCmd.map(v => `**Name: ** ${v.name}\n**Expected Args:** \`${v.excpectedArgs}\`\n**Required bot permissions:** ${getBotPerms(v?.required?.permissions)}`);
+        const data = typeOnlyCmd.map(v => `**Name: ** ${v.name}\n**Expected Args:** \`${v.excpectedArgs}\`\n**Command alias:** ${v.aliases.length == 0 ? 'None' : v.aliases.join(', ')}\n**Required bot permissions:** ${getBotPerms(v?.required?.permissions)}`);
         const lastPage = Math.ceil(data.length / core['page-break']);
         const options = { author: message.author, current: 1, maxValues: data.length, max: lastPage, count: core['page-break'] };
         const paginator = new Paginator(bot, message.channel, options, async(i, dat) => {

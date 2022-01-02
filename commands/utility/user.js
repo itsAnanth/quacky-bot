@@ -6,7 +6,7 @@ export default {
     aliases: ['whois', 'who'],
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    excpectedArgs: `${core.prefix}user [ID / @user]`,
     useOnly: { permissions: [], roles: [] },
     staff: ['helper', 'admin', 'mod'],
     execute: async(message, args) => {

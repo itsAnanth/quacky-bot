@@ -1,6 +1,6 @@
 import { Collection, MessageEmbed } from 'discord.js';
 import { devs, core } from '../data/index.js';
-import { checkPermissions, isStaff } from '../modules/evalCommand.js';
+import evalCommand, { checkPermissions, isStaff } from '../modules/evalCommand.js';
 import filter from '../modules/filter.js';
 export default {
     name: 'messageCreate',
@@ -51,8 +51,8 @@ export default {
         if (!maintenance) {
             try {
                 message.timestamps = timestamps;
-                if (!(await isStaff(command, message))) return;
-                // if (!(evalCommand(command, message) && await isStaff(command, message))) return;
+                // if (!(await isStaff(command, message))) return;
+                if (!(evalCommand(command, message) && await isStaff(command, message))) return;
                 if (!checkPermissions.apply(command, [message])) return;
                 command.execute(message, args, bot);
                 if (!command.manualStamp) timestamps.set(message.author.id, now);
