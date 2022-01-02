@@ -8,6 +8,16 @@ const menuOptions = [{
     value: 'ban',
 },
 {
+    label: 'Kick',
+    description: 'logs user kicks done via the bot',
+    value: 'kick',
+},
+{
+    label: 'User Update',
+    description: 'logs user update events',
+    value: 'userupdate',
+},
+{
     label: 'Message',
     description: 'Logs message update and delete',
     value: 'message',
@@ -26,11 +36,6 @@ const menuOptions = [{
     label: 'Voice Update',
     description: 'logs VC join and leave',
     value: 'voiceupdate',
-},
-{
-    label: 'Kick',
-    description: 'logs user kicks done via the bot',
-    value: 'kick',
 },
 {
     label: 'Mute',
