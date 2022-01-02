@@ -18,8 +18,7 @@ export default {
         if (!role) return message.replyEmbed(null, 'RED', 'Invalid role');
         const success = await db.utils.staff.assign(role.id, type);
         if (!success) return message.replyEmbed(null, 'RED', `${Formatters.roleMention(role.id)} is already assigned as \`${type}\``);
-        message.sendEmbed(null, 'RED', `Assigned ${Formatters.roleMention(role.id)} as ${type}`);
-        // console.log(await db.utils.staff.gethelper());
+        message.sendEmbed(null, 'GREEN', `Assigned ${Formatters.roleMention(role.id)} as ${type}`);
     }
 };
 
