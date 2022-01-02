@@ -52,6 +52,10 @@ class DBUtils {
                     mod: [],
                     admin: []
                 },
+                event: {
+                    messages: {},
+                    vc: {},
+                },
                 filter: {
                     whitelist: {
                         roles: [],
@@ -71,6 +75,20 @@ class DBUtils {
         res.staff[`${type}`]?.push(id);
         await this.keyv.set(core['server-db-cluster'], res);
         return true;
+    }
+
+    async get_event_msg() {
+        const res = await this.get();
+        const serialized = Object.entries(res.event.messages).map(([k, v]) => ({ id: k, count: v }));
+        return serialized;
+    }
+
+    async set_event_msg(id) {
+        const res = await this.get();
+        if (!res.event.messages[id]) res.event.messages[id] = 0;
+        res.event.messages[id]++;
+        await this.keyv.set(core['server-db-cluster'], res);
+        return res;
     }
 
     async staff_unassign(id, type) {
