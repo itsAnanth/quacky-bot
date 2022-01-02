@@ -1,6 +1,7 @@
 import { core } from '../../data/index.js';
-import { Permissions, Formatters } from 'discord.js';
+import { Permissions, Formatters, MessageEmbed } from 'discord.js';
 import db from '../../modules/db/server.js';
+import Paginator from '../../modules/Paginator.js';
 export default {
     name: 'staff',
     aliases: ['staff'],
@@ -8,15 +9,22 @@ export default {
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
     useOnly: { permissions: [Permissions.FLAGS.ADMINISTRATOR], roles: [] },
-    execute: async(message) => {
-        const mods = (await db.utils.staff.get_mod()).map(v => `${Formatters.roleMention(v)}`);
-        const helper = (await db.utils.staff.get_helper()).map(v => `${Formatters.roleMention(v)}`);
-        const admin = (await db.utils.staff.get_admin()).map(v => `${Formatters.roleMention(v)}`);
-        message.channel.send(`
-        mods \n${mods.join('\n')}
-        \nhelper \n${helper.join('\n')}
-        \nadmin \n${admin.join('\n')}
-        `);
+    execute: async(message, args, bot) => {
+        const mods = (await db.utils.staff.get_mod()).map(v => `${Formatters.roleMention(v)} | \`mod\``);
+        const helper = (await db.utils.staff.get_helper()).map(v => `${Formatters.roleMention(v)} | \`helper\``);
+        const admin = (await db.utils.staff.get_admin()).map(v => `${Formatters.roleMention(v)} | \`admin\``);
+        const data = [...admin, ...helper, ...mods];
+        const lastPage = Math.ceil(data.length / core['page-break']);
+        const options = { author: message.author, current: 1, maxValues: data.length, max: lastPage, count: core['page-break'] };
+        const paginator = new Paginator(bot, message.channel, options, async(i, dat) => {
+            const final = [...data].slice(i, i + core['page-break']);
+            return { embeds: [new MessageEmbed()
+                .setFooter({ text: `${dat.page} out of ${lastPage == 0 ? 1 : lastPage}` })
+                .setTitle('Staff List')
+                .setColor(core.embed)
+                .setDescription(final.join('\n\u200b\n'))] }; // return embed
+        });
+        await paginator.start();
     }
 };
 
