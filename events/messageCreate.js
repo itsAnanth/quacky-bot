@@ -2,17 +2,20 @@ import { Collection, MessageEmbed } from 'discord.js';
 import { devs, core } from '../data/index.js';
 import evalCommand, { checkPermissions, isStaff } from '../modules/evalCommand.js';
 import filter from '../modules/filter.js';
+import handleMessages from '../modules/handleMessages.js';
 export default {
     name: 'messageCreate',
     execute: async(bot, message) => {
-        if (await filter.execute(message)) message.delete();
+        if (await filter.execute(message)) return message.delete();
         const cooldowns = new Collection();
         let maintenance;
         /** Ignores:
         * - Bots
         * - Messages that don't start with bot prefix
         * - Banned users */
-        if (message.author.bot || !message.content.toLowerCase().startsWith(core.prefix)) return;
+        if (message.author.bot) return;
+        handleMessages(bot, message);
+        if (!message.content.toLowerCase().startsWith(core.prefix) || !message.guild) return;
         // Maintenance mode
         if (devs.includes(message.author.id) && message.content.startsWith(`${core.prefix}maintenance`) && message.content.split.length == 2) {
             maintenance = message.content.split(' ')[1] == 'on' ? true : false;
