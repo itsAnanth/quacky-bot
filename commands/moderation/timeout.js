@@ -1,7 +1,8 @@
 import { core } from '../../data/index.js';
-import { createEmbed, parseTime } from '../../modules/messageUtils.js';
+import { parseTime } from '../../modules/messageUtils.js';
 import db from '../../modules/db/main.js';
-import { Permissions } from 'discord.js';
+import { Permissions, MessageEmbed } from 'discord.js';
+import logAction from '../../modules/logAction.js';
 
 export default {
     name: 'timeout',
@@ -12,10 +13,10 @@ export default {
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.MODERATE_MEMBERS] },
     staff: ['helper', 'admin', 'mod'],
-    execute: async function(message, args) {
+    execute: async function(message, args, bot) {
         console.log(args);
-        if (!args[0]) return message.reply(createEmbed(message.author, 'RED', `Missing user\n\`${this.excpectedArgs}\``));
-        if (!args[1]) return message.reply(createEmbed(message.author, 'RED', `Missing time argument\n\`${this.excpectedArgs}\``));
+        if (!args[0]) return message.replyEmbed(null, 'RED', `Missing user\n\`${this.excpectedArgs}\``);
+        if (!args[1]) return message.replyEmbed(null, 'RED', `Missing time argument\n\`${this.excpectedArgs}\``);
         const user = await message.getMember(args[0]);
         if (!user) return message.replyEmbed(null, 'RED', 'Unknown Member');
         const time = parseTime(args[1]);
@@ -45,5 +46,14 @@ export default {
         };
         if (time != 0) await db.utils.rapsheet.add(user.id, muteObj);
         message.replyEmbed(null, 'GREEN', `<@${user.id}> has been ${time == 0 ? 'unmuted' : 'timed out for ' + args[1]} | ${user.id.sCode()}`);
+        const muteLogembed = new MessageEmbed()
+            .setAuthor({ name: user.user.username })
+            .setTitle(`${user.user.tag} Muted`)
+            .setColor('BLUE')
+            .setDescription(`**Moderator:** <@${message.author.id}>
+                \n**Reason:** ${reason}`)
+            .setFooter({ text: `User ID: ${user.id}` })
+            .setTimestamp();
+        logAction(bot, muteLogembed, 'mute');
     }
 };

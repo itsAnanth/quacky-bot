@@ -1,6 +1,7 @@
 import { core } from '../../data/index.js';
 import db from '../../modules/db/main.js';
-import { Permissions } from 'discord.js';
+import { Permissions, MessageEmbed } from 'discord.js';
+import logAction from '../../modules/logAction.js';
 export default {
     name: 'kick',
     aliases: ['kick'],
@@ -10,7 +11,7 @@ export default {
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.KICK_MEMBERS] },
     staff: ['admin', 'mod'],
-    execute: async function(message, args) {
+    execute: async function(message, args, bot) {
         if (!args[0]) return message.replyEmbed(null, 'RED', `Error Missing argument\n\`${this.excpectedArgs}\``);
         const user = await message.getMember(args[0]);
         if (!user) return message.replyEmbed(null, 'RED', 'Unknown User');
@@ -38,5 +39,14 @@ export default {
         };
         await db.utils.rapsheet.add(user.id, kickObj);
         message.replyEmbed(null, 'GREEN', `${user.user.tag} has been kicked | ${user.id}`);
+        const kicklogembed = new MessageEmbed()
+            .setAuthor({ name: user.user.username })
+            .setTitle(`${user.user.tag} Kicked`)
+            .setColor('NOT_QUITE_BLACK')
+            .setDescription(`**Moderator:** <@${message.author.id}>
+                \n**Reason:** ${reason}`)
+            .setFooter({ text: `User ID: ${user.id}` })
+            .setTimestamp();
+        logAction(bot, kicklogembed, 'kick');
     }
 };
