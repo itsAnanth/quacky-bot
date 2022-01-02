@@ -50,21 +50,18 @@ function hasId(member, value) {
 }
 
 async function isStaff(cmd, message) {
-    // let allowed = [];
     if (!cmd.staff || cmd.staff.length == 0) return true;
     for (let i = 0; i < cmd.staff.length; i++) {
-        const cDat = Cache.get(cmd.staff[i]);
-        let curr;
-        if (cDat) {
-            curr = cDat;
-            console.log(curr);
-        } else curr = await db.utils.staff[`get_${cmd.staff[i]}`]();
-        // const curr = cDat ? cDat : await db.utils.staff[`get${cmd.staff[i]}`]();
+        // const cDat = Cache.get(cmd.staff[i]);
+        // let curr;
+        // if (cDat) {
+        //     curr = cDat;
+        //     console.log(curr);
+        // } else curr = await db.utils.staff[`get_${cmd.staff[i]}`]();
+        const curr = await db.utils.staff[`get_${cmd.staff[i]}`]();
         if (curr.some(x => message.member.roles.cache.has(x))) return true;
-        // allowed = [...curr, ...allowed];
     }
     return false;
-    // return allowed.includes(message.member.id) ? true : false;
 }
 
 
