@@ -1,6 +1,5 @@
 import { core } from '../../data/index.js';
 import db from '../../modules/db/server.js';
-import { Permissions } from 'discord.js';
 
 export default {
     name: 'banword',
@@ -8,8 +7,9 @@ export default {
     cooldown: 0,
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix}banword [word]`,
-    useOnly: { permissions: [Permissions.FLAGS.MANAGE_MESSAGES], roles: [] },
+    useOnly: { permissions: [], roles: [] },
     required: { permissions: [] },
+    staff: ['mod', 'admin'],
     execute: async function(message, args) {
         if (!args[0]) return message.replyEmbed(null, 'RED', `Missing argument\n\`${this.excpectedArgs}\``);
         const word = args.slice(0, args.length).join('').toLowerCase();
