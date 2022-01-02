@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
-import { Client, Intents } from 'discord.js';
+import { Client, Collection, Intents } from 'discord.js';
 import logger from './modules/logger.js';
 import { handleEvents, handleCommands } from './modules/core/index.js';
 import initUtils from './modules/utils.js';
@@ -11,6 +11,7 @@ const intents = [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLA
 (async function() {
     global.logger = logger;
     await Cache.init();
+    bot.eventCooldown = {};
     config();
     initUtils();
     await handleCommands(bot);
