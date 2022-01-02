@@ -23,6 +23,7 @@ class DBUtils {
         };
         this.staff = {
             assign: this.staff_assign.bind(this.state),
+            unassign: this.staff_unassign.bind(this.state),
             get_helper: this.staff_getHelpers.bind(this.state),
             get_mod: this.staff_getMods.bind(this.state),
             get_admin: this.staff_getAdmins.bind(this.state),
@@ -43,6 +44,7 @@ class DBUtils {
                     join_leave: null,
                     userupdate: null,
                     roleupdate: null,
+                    voiceupdate: null,
                     channelupdate: null
                 },
                 staff: {
@@ -71,10 +73,13 @@ class DBUtils {
         return true;
     }
 
-    async staff_resign(id, type) {
+    async staff_unassign(id, type) {
         const res = await this.get();
-        if (!res.staff[`${type}`].includes(id)) return false;
-        res.staff[`${type}`]?.push(id);
+        const arr = res.staff[`${type}`];
+        const exists = arr.find(x => x == id);
+        if (!exists) return false;
+        const idx = arr.indexOf(exists);
+        arr.splice(idx, 1);
         await this.keyv.set(core['server-db-cluster'], res);
         return true;
     }

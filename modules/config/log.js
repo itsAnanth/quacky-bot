@@ -23,6 +23,11 @@ const menuOptions = [{
     value: 'roleupdate',
 },
 {
+    label: 'Voice Update',
+    description: 'logs VC join and leave',
+    value: 'voiceupdate',
+},
+{
     label: 'Kick',
     description: 'logs user kicks done via the bot',
     value: 'kick',
