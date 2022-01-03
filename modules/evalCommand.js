@@ -1,5 +1,5 @@
 import { Permissions } from 'discord.js';
-import Cache from './Cache.js';
+// import Cache from './Cache.js';
 import db from './db/server.js';
 
 const meta = [hasPermission, hasRole, hasId];
