@@ -6,7 +6,7 @@ export default {
     name: 'test',
     aliases: ['test'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Checks if a word exists in the local filter',
     excpectedArgs: `${core.prefix}test [word]`,
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [] },
@@ -14,9 +14,7 @@ export default {
     execute: async function(message, args) {
         if (!args[0]) return message.replyEmbed(null, 'RED', `Missing argument\n\`${this.excpectedArgs}\``);
         const word = args.slice(0, args.length).join('').toLowerCase();
-        const filter = await db.utils.filter.get();
-        const exists = filter.find(x => x == word);
-        if (exists) return message.replyEmbed(null, 'GREEN', `The word \`${word}\` exists in the filter`);
-        else message.replyEmbed(null, 'RED', `The word \`${word}\` does not exist in the filter`);
+        const exists = await db.utils.filter.includes(word);
+        message.replyEmbed(null, exists ? 'GREEN' : 'RED', `The word \`${word}\` ${exists ? 'exists' : 'does not exist'} in the filter`);
     }
 };
