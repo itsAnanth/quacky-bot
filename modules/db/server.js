@@ -53,7 +53,10 @@ class DBUtils {
                     admin: []
                 },
                 event: {
-                    messages: {},
+                    messages: {
+                        weekly: {},
+                        alltime: {}
+                    },
                     vc: {},
                 },
                 filter: {
@@ -61,7 +64,7 @@ class DBUtils {
                         roles: [],
                         ids: []
                     },
-                    words: []
+                    words: {}
                 }
             };
         }
@@ -77,16 +80,32 @@ class DBUtils {
         return true;
     }
 
+
+    async reset_event_msg() {
+        const res = await this.get();
+        res.event.messages.weekly = {};
+        await this.keyv.set(core['server-db-cluster'], res);
+        return res;
+    }
+
     async get_event_msg() {
         const res = await this.get();
-        const serialized = Object.entries(res.event.messages).map(([k, v]) => ({ id: k, count: v }));
+        const serialized = Object.entries(res.event.messages.weekly).map(([k, v]) => ({ id: k, count: v }));
+        return serialized;
+    }
+
+    async get_alltime_msg() {
+        const res = await this.get();
+        const serialized = Object.entries(res.event.messages.alltime).map(([k, v]) => ({ id: k, count: v }));
         return serialized;
     }
 
     async set_event_msg(id) {
         const res = await this.get();
-        if (!res.event.messages[id]) res.event.messages[id] = 0;
-        res.event.messages[id]++;
+        if (!res.event.messages.weekly[id]) res.event.messages.weekly[id] = 0;
+        if (!res.event.messages.alltime[id]) res.event.messages.alltime[id] = 0;
+        res.event.messages.alltime[id]++;
+        res.event.messages.weekly[id]++;
         await this.keyv.set(core['server-db-cluster'], res);
         return res;
     }
@@ -119,7 +138,7 @@ class DBUtils {
     }
 
     async filter_get() {
-        return (await this.get()).filter.words;
+        return Object.entries((await this.get()).filter.words);
     }
 
     async filter_whitelist_role(id, word) {
@@ -134,22 +153,24 @@ class DBUtils {
         return true;
     }
 
-    async filter_remove(word, index) {
+    async filter_remove(word) {
         const res = await this.get();
-        res.filter.words.splice(index, 1);
+        if (!res.filter.words[word]) return false;
+        delete res.filter.words[word];
         await this.keyv.set(core['server-db-cluster'], res);
-        return res;
+        return true;
     }
 
     async filter_includes(word) {
-        return (await this.get()).filter.words.find(x => x == word);
+        return (await this.get()).filter.words[word] ? true : false;
     }
 
-    async filter_add(word) {
+    async filter_add(word, flag) {
         const res = await this.get();
-        res.filter.words.push(word);
+        if (res.filter.words[word]) return false;
+        res.filter.words[word] = { flag: flag };
         await this.keyv.set(core['server-db-cluster'], res);
-        return res;
+        return true;
     }
 
     async set_log(type, id) {
