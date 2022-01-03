@@ -2,9 +2,8 @@
 import { core, devs } from '../../data/index.js';
 import { inspect } from 'util';
 
-// import economy_db from '../../modules/db/economy.js';
-// import market_db from '../../modules/db/market.js';
-// import levels_db from '../../modules/db/levels.js';
+import main_db from '../../modules/db/main.js';
+import server_db from '../../modules/db/server.js';
 
 const { prefix } = core;
 
