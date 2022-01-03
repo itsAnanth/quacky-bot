@@ -89,7 +89,6 @@ function m_collector(message, value) {
         const channel = message.guild.channels.cache.get(arg);
         if (!channel) return message.replyEmbed(null, 'RED', 'Invalid channel');
         await db.utils.set_log(value, channel.id);
-        console.log(await db.utils.log_channels());
         message.sendEmbed(null, 'GREEN', `Successfully set ${Formatters.channelMention(channel.id)} as \`${value}\` logging channel`);
         msgcollector.stop();
     });
