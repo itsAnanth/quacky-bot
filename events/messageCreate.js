@@ -6,6 +6,8 @@ import handleMessages from '../modules/handleMessages.js';
 export default {
     name: 'messageCreate',
     execute: async(bot, message) => {
+        if (message.author.bot) return;
+
         if (await filter.execute(message)) return message.delete();
         const cooldowns = new Collection();
         let maintenance;
@@ -13,9 +15,8 @@ export default {
         * - Bots
         * - Messages that don't start with bot prefix
         * - Banned users */
-        if (message.author.bot) return;
-        handleMessages(bot, message);
-        if (!message.content.toLowerCase().startsWith(core.prefix) || !message.guild) return;
+
+        if (!message.content.toLowerCase().startsWith(core.prefix) || !message.guild) return handleMessages(bot, message);
         // Maintenance mode
         if (devs.includes(message.author.id) && message.content.startsWith(`${core.prefix}maintenance`) && message.content.split.length == 2) {
             maintenance = message.content.split(' ')[1] == 'on' ? true : false;
