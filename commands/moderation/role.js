@@ -1,6 +1,5 @@
 import { core } from '../../data/index.js';
-import { Permissions, MessageEmbed, Formatters } from 'discord.js';
-import logAction from '../../modules/logAction.js';
+import { Permissions, Formatters } from 'discord.js';
 export default {
     name: 'role',
     aliases: ['role'],
@@ -8,9 +7,9 @@ export default {
     descriptions: 'Warns a user with reason, if any',
     excpectedArgs: `${core.prefix}role [ID / @user] [Role ID / @Role]`,
     useOnly: { permissions: [], roles: [] },
-    required: { permissions: [Permissions.FLAGS.KICK_MEMBERS] },
+    required: { permissions: [Permissions.FLAGS.MANAGE_ROLES] },
     staff: ['admin', 'mod'],
-    execute: async function(message, args, bot) {
+    execute: async function(message, args) {
         if (!args[0]) return message.replyEmbed(null, 'RED', `Error Missing argument\n\`${this.excpectedArgs}\``);
         if (!args[1]) return message.replyEmbed(null, 'RED', `Error Missing argument\n\`${this.excpectedArgs}\``);
 
@@ -34,15 +33,5 @@ export default {
         }
 
         message.sendEmbed(null, 'RED', `<@${user.id}> ${txt}${Formatters.roleMention(role.id)}`);
-
-        // const kicklogembed = new MessageEmbed()
-        //     .setAuthor({ name: user.user.username })
-        //     .setTitle(`${user.user.tag} Kicked`)
-        //     .setColor('NOT_QUITE_BLACK')
-        //     .setDescription(`**Moderator:** <@${message.author.id}>
-        //         \n**Reason:** ${reason}`)
-        //     .setFooter({ text: `User ID: ${user.id}` })
-        //     .setTimestamp();
-        // logAction(bot, kicklogembed, 'kick');
     }
 };
