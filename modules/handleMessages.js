@@ -1,4 +1,8 @@
 import db from './db/server.js';
+import cron from 'cron';
+import logger from './logger.js';
+
+const CronJob = cron.CronJob;
 
 
 export default async function(bot, message) {
@@ -7,11 +11,17 @@ export default async function(bot, message) {
     const data = bot.eventCooldown[id];
     if (!data) {
         await db.utils.set_event_msg(message.author.id);
-        console.log('added + 1');
         bot.eventCooldown[id] = Date.now();
     } else if (Math.abs(now - data) >= 5000)
         delete bot.eventCooldown[id];
-    // eslint-disable-next-line no-useless-return
-    // else if (now < (data + 1000))
-    //     return console.log(now - (data + 1000));
 }
+
+async function resetDB() {
+    const job = new CronJob('1 1 1 * * 0', async() => { // Every Sunday at approx. 1am
+        await db.utils.reset_event_msg();
+    }, null, true, 'Europe/London');
+    job.start();
+    logger.debug('CRON', 'Initialized timer');
+}
+
+export { resetDB };
