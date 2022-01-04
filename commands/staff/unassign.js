@@ -5,7 +5,7 @@ export default {
     name: 'unassign',
     aliases: ['demote'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Unassigns a role from staff',
     excpectedArgs: `${core.prefix}unassign [helper/mod/admin] [ID / @user]`,
     useOnly: { permissions: [Permissions.FLAGS.ADMINISTRATOR], roles: [] },
     execute: async(message, args) => {

@@ -5,8 +5,8 @@ export default {
     name: 'assign',
     aliases: ['assign'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    descriptions: 'Assign a new staff',
+    excpectedArgs: `${core.prefix}assign [mod/helper/admin] [RoleID / @Role]`,
     useOnly: { permissions: [Permissions.FLAGS.ADMINISTRATOR], roles: [] },
     execute: async(message, args) => {
         const valid = ['mod', 'helper', 'admin'];

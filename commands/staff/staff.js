@@ -6,8 +6,8 @@ export default {
     name: 'staff',
     aliases: ['staff'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    descriptions: 'Displays all staff roles of the server',
+    excpectedArgs: `${core.prefix}staff`,
     useOnly: { permissions: [Permissions.FLAGS.ADMINISTRATOR], roles: [] },
     execute: async(message, args, bot) => {
         const mods = (await db.utils.staff.get_mod()).map(v => `${Formatters.roleMention(v)} | \`mod\``);
