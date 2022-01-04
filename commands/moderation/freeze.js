@@ -25,12 +25,11 @@ export default {
             const view_channel = permissions.has(Permissions.FLAGS.VIEW_CHANNEL);
             if (view_channel && send_messages) {
                 try {
-                    await channel.permissionOverwrites.create(everyone, {
+                    await channel.permissionOverwrites.edit(everyone, {
                         SEND_MESSAGES: false
                     });
-                    console.log(channel.name);
                     lockedChannels.push({ name: channel.name, id: channel.id });
-                    db.utils.channels.lock(channel.id);
+                    db.utils.channels.lock(channel.id, send_messages);
                 } catch (e) {
                     console.log(e);
                 }

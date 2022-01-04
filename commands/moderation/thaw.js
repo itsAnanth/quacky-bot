@@ -18,11 +18,11 @@ export default {
         const lockedChannels = await db.utils.channels.get();
         const unlockedChannels = [];
         for (let i = 0; i < lockedChannels.length; i++) {
-            const channel = await message.guild.channels.cache.get(lockedChannels[i]);
+            const channel = await message.guild.channels.cache.get(lockedChannels[i].id);
             if (!channel) continue;
             try {
-                await channel.permissionOverwrites.create(everyone, {
-                    SEND_MESSAGES: null
+                await channel.permissionOverwrites.edit(everyone, {
+                    SEND_MESSAGES: lockedChannels[i].state
                 });
                 unlockedChannels.push({ name: channel.name, id: channel.id });
             } catch (e) {
