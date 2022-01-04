@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
-import { Client, Collection, Intents } from 'discord.js';
+import { Client, Intents } from 'discord.js';
 import logger from './modules/logger.js';
 import { handleEvents, handleCommands } from './modules/core/index.js';
 import initUtils from './modules/utils.js';
