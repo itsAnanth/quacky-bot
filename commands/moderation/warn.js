@@ -2,7 +2,6 @@ import { core } from '../../data/index.js';
 import db from '../../modules/db/main.js';
 import timeout from './timeout.js';
 import ban from './ban.js';
-import { Permissions } from 'discord.js';
 
 
 export default {
@@ -13,14 +12,14 @@ export default {
     excpectedArgs: `${core.prefix}warn [ID / @user] (reason)`,
     useOnly: { permissions: [], roles: [] },
     staff: ['helper', 'mod', 'admin'],
-    execute: async function(message, args) {
+    execute: async function(message, args, bot, bypass) {
         if (!args[0]) return message.replyEmbed(null, 'RED', `**Error:** Missing user\n\`${this.excpectedArgs}\``);
         if (!args[1]) return message.replyEmbed(null, 'RED', `**Error:** Missing Reason\n\`${this.excpectedArgs}\``);
         const user = await message.getMember(args[0]);
         if (!user) return message.replyEmbed(null, 'RED', 'Unknown User');
 
-        // if (message.author.id == user.id) return message.replyEmbed(null, 'RED', 'You cannot warn yourself');
-        if (message.member.roles.highest.position <= user.roles.highest.position && message.author.id != message.guild.ownerId) return message.replyEmbed(null, 'RED', 'Unable to warn | provided user has higher roles');
+        if (!bypass && message.author.id == user.id) return message.replyEmbed(null, 'RED', 'You cannot warn yourself');
+        if (!bypass && message.member.roles.highest.position <= user.roles.highest.position && message.author.id != message.guild.ownerId) return message.replyEmbed(null, 'RED', 'Unable to warn | provided user has higher roles');
 
         const reason = args[1] ? args.slice(1, args.length).join(' ') : 'No Reason Provided';
         const totalWarns = await db.utils.getWarns(user.id);

@@ -15,6 +15,6 @@ export default {
         if (!args[0]) return message.replyEmbed(null, 'RED', `Missing argument\n\`${this.excpectedArgs}\``);
         const word = args.slice(0, args.length).join('').toLowerCase();
         const exists = await db.utils.filter.includes(word);
-        message.replyEmbed(null, exists ? 'GREEN' : 'RED', `The word \`${word}\` ${exists ? 'exists' : 'does not exist'} in the filter`);
+        message.replyEmbed(null, exists.success ? 'GREEN' : 'RED', `The word \`${word}\` ${exists.success ? `exists with flag \`${exists.flag}\`` : 'does not exist'} in the filter`);
     }
 };

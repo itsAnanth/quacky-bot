@@ -14,7 +14,7 @@ export default {
         if (!args[0]) return message.replyEmbed(null, 'RED', `Missing flag argument [none/mute/ban/kick]\n\`${this.excpectedArgs}\``);
         if (!args[1]) return message.replyEmbed(null, 'RED', `Missing argument\n\`${this.excpectedArgs}\``);
         const flag = args[0].toLowerCase();
-        if (!['none', 'ban', 'kick', 'mute'].includes(flag)) return message.replyEmbed(null, 'RED', 'Invalid flag, use [none/kick/mute/ban]');
+        if (!['none', 'ban', 'kick', 'mute', 'warn'].includes(flag)) return message.replyEmbed(null, 'RED', 'Invalid flag, use [none/kick/mute/ban]');
         const word = args.slice(1, args.length).join('').toLowerCase();
         const success = await db.utils.filter.add(word, flag);
         if (!success) return message.replyEmbed(null, 'RED', `The word ${word} already exists in the local filter`);

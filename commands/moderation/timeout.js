@@ -13,7 +13,7 @@ export default {
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.MODERATE_MEMBERS] },
     staff: ['helper', 'admin', 'mod'],
-    execute: async function(message, args, bot) {
+    execute: async function(message, args, bot, bypass) {
         console.log(args);
         if (!args[0]) return message.replyEmbed(null, 'RED', `Missing user\n\`${this.excpectedArgs}\``);
         if (!args[1]) return message.replyEmbed(null, 'RED', `Missing time argument\n\`${this.excpectedArgs}\``);
@@ -24,7 +24,7 @@ export default {
         const reason = args[2] ? args.slice(2, args.length).join(' ') : 'No Reason Provided';
 
         if (user.roles.highest.position >= message.member.roles.highest.position) return message.replyEmbed(null, 'RED', 'Unable to mute, User has a role higher than yours');
-        if (user.id == message.author.id) return message.replyEmbed(null, 'RED', 'You cannot mute yourself');
+        if (!bypass && user.id == message.author.id) return message.replyEmbed(null, 'RED', 'You cannot mute yourself');
 
         try {
             await user.timeout(time, reason);
