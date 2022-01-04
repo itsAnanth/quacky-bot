@@ -5,7 +5,7 @@ export default {
     name: 'banword',
     aliases: ['banword'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Bans a specific word with flags',
     excpectedArgs: `${core.prefix}banword [none/ban/kick/mute] [word]`,
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [] },

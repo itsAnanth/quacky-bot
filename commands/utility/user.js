@@ -5,7 +5,7 @@ export default {
     name: 'user',
     aliases: ['whois', 'who'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Shows user info',
     excpectedArgs: `${core.prefix}user [ID / @user]`,
     useOnly: { permissions: [], roles: [] },
     staff: ['helper', 'admin', 'mod'],

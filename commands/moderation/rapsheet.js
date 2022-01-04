@@ -8,7 +8,7 @@ export default {
     name: 'rapsheet',
     aliases: ['rapsheet'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Total infractions and mod logs of a user',
     excpectedArgs: `${core.prefix}rapsheet [ID / @user]`,
     useOnly: { permissions: [], roles: [], ids: [] },
     staff: ['helper', 'admin', 'mod'],

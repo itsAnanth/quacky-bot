@@ -5,7 +5,7 @@ export default {
     name: 'commands',
     aliases: ['command', 'cmd'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Shows all the commands usable by a specific staff',
     excpectedArgs: `${core.prefix}commands [mod/helper/admin]`,
     useOnly: { permissions: [], roles: [] },
     staff: ['admin', 'mod', 'helper'],

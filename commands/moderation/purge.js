@@ -6,28 +6,17 @@ export default {
     name: 'purge',
     aliases: ['clear'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Deletes a specific amount of messages in a channel (100 max limit)',
     excpectedArgs: `${core.prefix}purge [number]`,
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.MANAGE_MESSAGES] },
     staff: ['admin'],
     execute: async function(message, args) {
         if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Invalid argument | Missing message count to purge'));
-        if (isNaN(parseInt(args[0]))) return message.replyEmbed(null, 'RED', 'Invalid argument | Expected a number');
-        let count = args[0], i = 100;
-        if (count > 100) {
-            while (count > 0) {
-                if (count < 100) i = count;
-                try {
-                    await message.channel.bulkDelete(i);
-                    count -= i;
-                } catch (e) {
-                    message.sendEmbed(null, 'RED', `Error | \`${e}\``);
-                    return;
-                }
-            }
-        } else
-            message.channel.bulkDelete(count);
+        const count = parseInt(args[0]);
+        if (isNaN(count)) return message.replyEmbed(null, 'RED', 'Invalid argument | Expected a number');
+        if (count < 0 || count > 100) return message.replyEmbed(null, 'RED', 'Messages count must be greater than 0 and less than 100');
+        message.channel.bulkDelete(count);
         message.sendEmbed(null, 'GREEN', `Purged ${args[0]} messages`);
     }
 };

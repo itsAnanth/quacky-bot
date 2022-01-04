@@ -4,7 +4,7 @@ export default {
     name: 'role',
     aliases: ['role'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Adds or removes a role from a user',
     excpectedArgs: `${core.prefix}role [ID / @user] [Role ID / @Role]`,
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.MANAGE_ROLES] },

@@ -11,8 +11,8 @@ export default {
     name: 'eval',
     aliases: ['eval'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    descriptions: 'eval command for devs',
+    excpectedArgs: `${core.prefix}eval code`,
     useOnly: { permissions: [], roles: [], ids: devs },
     execute: async(message) => {
         try {

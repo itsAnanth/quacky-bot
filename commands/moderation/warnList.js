@@ -7,7 +7,7 @@ export default {
     name: 'warnlist',
     aliases: ['warns'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Shows total warns a user has',
     excpectedArgs: `${core.prefix}warnlist [ID / @user]`,
     useOnly: { permissions: [], roles: [], ids: [] },
     staff: ['helper', 'admin', 'mod'],

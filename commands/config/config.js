@@ -8,8 +8,8 @@ export default {
     name: 'config',
     aliases: ['config'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    descriptions: 'Bot configuration command',
+    excpectedArgs: `${core.prefix}config`,
     useOnly: { permissions: [Permissions.FLAGS.ADMINISTRATOR], roles: [] },
     required: { permissions: [] },
     execute: async function(message, args, bot) {

@@ -7,7 +7,7 @@ export default {
     name: 'ban',
     aliases: ['ban'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Bans a user with reason, if any',
     excpectedArgs: `${core.prefix}ban [ID / @user] (reason | optional)`,
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.BAN_MEMBERS] },

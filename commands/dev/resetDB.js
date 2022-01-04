@@ -5,8 +5,8 @@ export default {
     name: 'resetdb',
     aliases: ['reset'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    descriptions: 'db nuke for devs',
+    excpectedArgs: `${core.prefix}resetdb`,
     useOnly: { permissions: [], roles: [], ids: devs },
     execute: async(message) => {
         mainDB.clear();

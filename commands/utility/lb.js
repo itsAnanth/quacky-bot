@@ -11,7 +11,7 @@ export default {
     name: 'lb',
     aliases: ['leaderboard', 'lbs'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Shows messages leaderboard of the server',
     excpectedArgs: `${core.prefix}commands [mod/helper/admin]`,
     useOnly: { permissions: [], roles: [] },
     staff: [],

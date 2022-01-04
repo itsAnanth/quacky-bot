@@ -4,8 +4,8 @@ export default {
     name: 'pardon',
     aliases: ['pardon'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
-    excpectedArgs: `${core.prefix} warn [ID / @user] (reason)`,
+    descriptions: 'Removes a specific case from user rapsheet',
+    excpectedArgs: `${core.prefix}pardon [case ID]`,
     useOnly: { permissions: [], roles: [], ids: [] },
     staff: ['admin'],
     execute: async(message, args) => {

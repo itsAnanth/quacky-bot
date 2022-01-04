@@ -5,7 +5,7 @@ export default {
     name: 'emoji',
     aliases: ['emoji'],
     cooldown: 0,
-    descriptions: 'Warns a user with reason, if any',
+    descriptions: 'Locks or unlocks a emoji for a specific role',
     excpectedArgs: `${core.prefix}emoji [lock/unlock] [ID / @Role] [emoteID / emote]`,
     useOnly: { permissions: [], roles: [] },
     staff: ['admin', 'mod'],
