@@ -1,7 +1,7 @@
 {
   "name": "quacky-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Quack quack",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
     "dev": "nodemon --experimental-json-modules --no-warnings=ExperimentalWarnings index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "AnanthDev",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.5.0",
