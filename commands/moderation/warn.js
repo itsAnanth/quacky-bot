@@ -1,5 +1,6 @@
 import { core } from '../../data/index.js';
 import db from '../../modules/db/main.js';
+import serverdb from '../../modules/db/server.js';
 import timeout from './timeout.js';
 import ban from './ban.js';
 
@@ -22,6 +23,35 @@ export default {
         if (!bypass && message.member.roles.highest.position <= user.roles.highest.position && message.author.id != message.guild.ownerId) return message.replyEmbed(null, 'RED', 'Unable to warn | provided user has higher roles');
 
         const reason = args[1] ? args.slice(1, args.length).join(' ') : 'No Reason Provided';
+
+        if (!bypass) {
+            const warns = await db.utils.getMod(message.author.id, 'warn');
+            let stateCount = warns.count;
+
+            if (warns.lt) {
+                const time = warns.lt;
+                const now = Date.now();
+                if (Math.abs(time - now) >= core.warn.time * 60 * 1000) {
+                    console.log('resetting bans');
+                    await db.utils.resetMod(message.author.id, 'warn');
+                    stateCount = 0;
+                }
+            }
+            if (stateCount >= core.warn.max) {
+                console.log(stateCount);
+                const mods = await serverdb.utils.staff.get_mod();
+                const admins = await serverdb.utils.staff.get_admin();
+                const helper = await serverdb.utils.staff.get_helper();
+                const roles = [...mods, ...admins, ...helper];
+                for (let i = 0; i < roles.length; i++) {
+                    if (message.member.roles.cache.has(roles[i]))
+                        return await message.member.roles.remove(roles[i]).catch(console.error);
+                }
+            }
+
+
+            await db.utils.setMod(message.author.id, 'warn');
+        }
         const totalWarns = await db.utils.getWarns(user.id);
         const id = await db.utils.rapsheet.getId(user.id);
         const punishment = core.punishments[totalWarns.length + 1];
@@ -35,15 +65,15 @@ export default {
         await db.utils.rapsheet.add(user.id, warnObj);
         const msg = await message.sendEmbed(null, 'GREEN', `<@${user.id}> has been **warned** | ${user.id.sCode()}`);
         setTimeout(() => msg.delete(), 5000);
-        // if (punishment) {
-        //     switch (punishment.type) {
-        //     case 'mute':
-        //         // eslint-disable-next-line no-case-declarations
-        //         timeout.execute(message, [user.id, punishment.duration, ...`Auto Mod | ${totalWarns.length + 1} Infractions`.split(' ')]);
-        //         break;
-        //     case 'ban':
-        //         ban.execute(message, [user.id, ...`Auto Mod | ${totalWarns.length + 1} Infractions`.split(' ')]);
-        //     }
-        // }
+        if (punishment) {
+            switch (punishment.type) {
+            case 'mute':
+                // eslint-disable-next-line no-case-declarations
+                timeout.execute(message, [user.id, punishment.duration, ...`Auto Mod | ${totalWarns.length + 1} Infractions`.split(' ')], bot, true);
+                break;
+            case 'ban':
+                ban.execute(message, [user.id, ...`Auto Mod | ${totalWarns.length + 1} Infractions`.split(' ')], bot, true);
+            }
+        }
     }
 };

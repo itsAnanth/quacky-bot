@@ -24,10 +24,31 @@ class DBUtils {
                 warns: [],
                 rapsheet: [],
                 bans: { lt: null, count: 0 },
-                kicks: { lt: null, count: 0 }
+                kicks: { lt: null, count: 0 },
+                warn: { lt: null, count: 0 }
             };
         }
         return val;
+    }
+
+    async setMod(id, type) {
+        const res = await this.get(id);
+        res[type].count++;
+        if (res[type].lt) res[type].lt = Date.now();
+        await this.keyv.set(id, res);
+        return res;
+    }
+
+    async getMod(id, type) {
+        return (await this.get(id))[type];
+    }
+
+    async resetMod(id, type) {
+        const res = await this.get(id);
+        res[type].count = 0;
+        res[type].lt = null;
+        await this.keyv.set(id, res);
+        return res;
     }
 
     async setKicks(id) {
