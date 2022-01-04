@@ -162,7 +162,8 @@ class DBUtils {
     }
 
     async filter_includes(word) {
-        return (await this.get()).filter.words[word] ? true : false;
+        const res = await this.get();
+        return res.filter.words[word] ? { success: true, flag: res.filter.words[word].flag } : { success: false };
     }
 
     async filter_add(word, flag) {
@@ -188,9 +189,9 @@ class DBUtils {
         return (await this.get()).log;
     }
 
-    async freeze(id) {
+    async freeze(id, state) {
         const res = await this.get();
-        res.channels.locked.push(id);
+        res.channels.locked.push({ id: id, state: state });
         await this.keyv.set(core['server-db-cluster'], res);
         return res;
     }

@@ -22,10 +22,52 @@ class DBUtils {
         if (!val) {
             val = {
                 warns: [],
-                rapsheet: []
+                rapsheet: [],
+                bans: { lt: null, count: 0 },
+                kicks: { lt: null, count: 0 }
             };
         }
         return val;
+    }
+
+    async setKicks(id) {
+        const res = await this.get(id);
+        res.kicks.count++;
+        if (res.kicks.lt) res.kicks.lt = Date.now();
+        await this.keyv.set(id, res);
+        return res;
+    }
+
+    async setBans(id) {
+        const res = await this.get(id);
+        res.bans.count++;
+        if (!res.bans.lt) res.bans.lt = Date.now();
+        await this.keyv.set(id, res);
+        return res;
+    }
+
+    async getBans(id) {
+        return (await this.get(id)).bans;
+    }
+
+    async getKicks(id) {
+        return (await this.get(id)).kicks;
+    }
+
+    async resetKicks(id) {
+        const res = await this.get(id);
+        res.kicks.count = 0;
+        res.kicks.lt = null;
+        await this.keyv.set(id, res);
+        return res;
+    }
+
+    async resetBans(id) {
+        const res = await this.get(id);
+        res.bans.count = 0;
+        res.bans.lt = null;
+        await this.keyv.set(id, res);
+        return res;
     }
 
     async r_id(id) {
