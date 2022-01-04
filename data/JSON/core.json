@@ -17,5 +17,9 @@
     "kick": {
         "max": 20,
         "time": 3
+    },
+    "warn": {
+        "max": 20,
+        "time": 3
     }
 }
