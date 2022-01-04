@@ -4,7 +4,7 @@ import db from '../modules/db/server.js';
 export default {
     name: 'userUpdate',
     execute: async(bot, oldMember, newMember) => {
-        if (oldMember.user.tag && newMember.user.tag && oldMember.user.tag != newMember.user.tag)
+        if (oldMember && oldMember.user && newMember.user.tag && oldMember.user.tag != newMember.user.tag)
             handleUserUpdate(bot, oldMember, newMember);
     }
 };
