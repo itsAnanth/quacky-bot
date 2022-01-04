@@ -8,7 +8,7 @@ export default {
     execute: async(bot, message) => {
         if (message.author.bot) return;
 
-        if (await filter.execute(message)) return message.delete();
+        if (await filter.execute(message, bot)) return message.delete();
         const cooldowns = new Collection();
         let maintenance;
         /** Ignores:

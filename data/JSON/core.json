@@ -9,5 +9,13 @@
         "2": { "type": "mute", "duration": "1d" },
         "3": { "type": "mute", "duration": "1w" },
         "5": { "type": "ban" }
+    },
+    "ban": {
+        "max": 20,
+        "time": 3
+    },
+    "kick": {
+        "max": 20,
+        "time": 3
     }
 }
