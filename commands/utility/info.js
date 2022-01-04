@@ -20,8 +20,10 @@ export default {
             .setDescription(`${command.descriptions}\n\nExpected Arguments: \`${command.excpectedArgs}\``)
             .setColor('DARK_BLUE')
             .addField('Required staff role', `${!command.staff || command.staff.length == 0 ? 'None' : command.staff.join(', ')}`, true)
-            .addField('\u200b', '\u200b', true)
-            .addField('Required bot permissions', `${!command.required || command.required.permissions.length == 0 || !command.required.permissions ? 'None' : getBotPerms(command.required.permissions)}`, true);
+            .addField('Command aliases', `${!command.aliases || command.aliases.length == 0 ? 'None' : command.aliases.join(', ')}`, true)
+            .addField('Required bot permissions', `${!command.required || command.required.permissions.length == 0 || !command.required.permissions ? 'None' : getBotPerms(command.required.permissions)}`, true)
+            .setTimestamp()
+            .setFooter({ text: 'Quack Quack' });
 
         message.channel.send({ embeds: [embed] });
     }
