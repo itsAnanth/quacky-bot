@@ -41,7 +41,7 @@ async function handleUserUpdate(bot, oldMember, newMember) {
         .setAuthor({ name: newMember.user.username, iconURL: newMember.user.avatarURL() })
         .setTitle('Nickname Changed')
         .setColor('BLUE')
-        .setDescription(`**Before:** ${Formatters.codeBlock(oldMember.nickname)}\n**After:** ${Formatters.codeBlock(newMember.nickname)}`)
+        .setDescription(`**Before:** ${Formatters.codeBlock(oldMember.nickname ? oldMember.nickname : oldMember.user.username)}\n**After:** ${Formatters.codeBlock(newMember.nickname ? newMember.nickname : newMember.user.nickname)}`)
         .setFooter({ text: `User ID: ${newMember.id}` })
         .setTimestamp();
     await mC.send({ embeds: [embed] }).catch(console.error);
