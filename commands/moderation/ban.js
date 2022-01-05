@@ -25,11 +25,11 @@ export default {
 
         if (isMember && !user.bannable) return message.replyEmbed(null, 'RED', 'Unable to ban the user');
         if (!bypass && message.author.id == user.id) return message.replyEmbed(null, 'RED', 'You cannot ban yourself');
-        if (!bypass && message.member.roles.highest.position <= user.roles.highest.position && message.author.id != message.guild.ownerId) return message.replyEmbed(null, 'RED', 'Unable to warn | provided user has higher roles');
+        if (!bypass && isMember && message.member.roles.highest.position <= user.roles.highest.position && message.author.id != message.guild.ownerId) return message.replyEmbed(null, 'RED', 'Unable to warn | provided user has higher roles');
 
         const reason = args[1] ? args.slice(1, args.length).join(' ') : 'No Reason Provided';
         try {
-            await user.ban({ reason: reason });
+            isMember ? await user.ban({ reason: reason }) : await message.guild.members.ban(user.id, { reason: reason });
         } catch (e) {
             console.log(e);
             return message.replyEmbed(null, 'RED', `Unable to ban the user | \`${e}\``);
@@ -75,7 +75,7 @@ export default {
             id: id
         };
         await db.utils.rapsheet.add(user.id, banObj);
-        message.replyEmbed(null, 'GREEN', `${user.user.tag} has been **banned** | ${user.id}`);
+        message.replyEmbed(null, 'GREEN', `${isMember ? user.user.tag : user.tag} has been **banned** | ${user.id}`);
         const banlogembed = new MessageEmbed()
             .setAuthor({ name: isMember ? user.user.username : user.username })
             .setTitle(`${isMember ? user.user.tag : user.tag} Banned`)
