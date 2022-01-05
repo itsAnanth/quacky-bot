@@ -11,7 +11,7 @@ function init() {
     };
 
     Message.prototype.getMember = async function(string) {
-        const member = await this.guild.members.fetch(string.replace(/\D/g, ''));
+        const member = await this.guild.members.fetch(string.replace(/\D/g, '')).catch(() => {});
         return member ? member : null;
     };
 
