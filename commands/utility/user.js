@@ -33,7 +33,7 @@ export default {
             .addField('\u200b', '\u200b', true)
             .setFooter({ text: 'Officer Quack' })
             .setTimestamp();
-        if (isMember) embed.addField(`Roles [${message.member.roles.cache.size}]`, message.member.roles.cache.map(r => Formatters.roleMention(r.id)).join(' '));
+        if (isMember) embed.addField(`Roles [${user.roles.cache.size}]`, user.roles.cache.map(r => Formatters.roleMention(r.id)).join(' '));
         message.channel.send({ embeds: [embed] });
     }
 };
