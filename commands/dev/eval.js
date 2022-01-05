@@ -4,6 +4,7 @@ import { inspect } from 'util';
 
 import main_db from '../../modules/db/main.js';
 import server_db from '../../modules/db/server.js';
+import { MessageEmbed } from 'discord.js';
 
 const { prefix } = core;
 

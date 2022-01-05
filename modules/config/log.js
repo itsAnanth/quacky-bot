@@ -46,6 +46,11 @@ const menuOptions = [{
     label: 'Channel update',
     description: 'logs channel updates',
     value: 'channelupdate',
+},
+{
+    label: 'Nitro Boosters',
+    description: 'logs boosting events',
+    value: 'booster',
 }];
 
 export default {

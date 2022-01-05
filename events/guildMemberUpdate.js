@@ -4,12 +4,31 @@ import db from '../modules/db/server.js';
 export default {
     name: 'guildMemberUpdate',
     execute: async(bot, oldMember, newMember) => {
+        if (oldMember.premiumSince != newMember.premiumSince)
+            handleBooster(bot, oldMember, newMember);
         if (oldMember.roles.cache.size != newMember.roles.cache.size)
             handleRoleUpdate(bot, oldMember, newMember);
         else if (oldMember.nickname != newMember.nickname)
             handleUserUpdate(bot, oldMember, newMember);
     }
 };
+
+async function handleBooster(bot, oldMember, newMember) {
+    const Lchannels = await db.utils.log_channels();
+    const mId = Lchannels.booster;
+    if (!mId) return;
+    const mC = bot.channels.resolve(mId);
+    if (!mC) return;
+
+    const embed = new MessageEmbed()
+        .setAuthor({ name: newMember.user.username, iconURL: newMember.user.avatarURL() })
+        .setTitle('Nitro Boost')
+        .setColor('DARK_VIVID_PINK')
+        .setThumbnail('https://media.discordapp.net/attachments/714445203318112256/928216348692201522/921713247965548614.png')
+        .setDescription(`${Formatters.userMention(newMember.id)} **Thank you for boosting the Quack Pack - You now have access to exclusive emotes (these emotes begin with qp_)!**`)
+        .setTimestamp();
+    await mC.send({ embeds: [embed] }).catch(console.error);
+}
 
 async function handleUserUpdate(bot, oldMember, newMember) {
     const Lchannels = await db.utils.log_channels();

@@ -11,7 +11,7 @@ export default {
 
         if (env == 'PROD') {
             logger.debug('env set', 'PROD');
-            await bot.user.setPresence({ activities: [{ name: 'Duck Gang', type: 'WATCHING' }], status: 'online' });
+            await bot.user.setPresence({ activities: [{ name: 'Quack Pack', type: 'WATCHING' }], status: 'online' });
             logger.info('Ready!');
             // load(bot);
             await logger.init(bot);
@@ -36,7 +36,7 @@ export default {
                 }
             });
         } else
-            bot.user.setPresence({ activities: [{ name: 'Duck Gang', type: 'WATCHING' }], status: 'online' });
+            bot.user.setPresence({ activities: [{ name: 'Quack Pack', type: 'WATCHING' }], status: 'online' });
         resetDB();
     }
 };

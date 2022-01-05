@@ -45,7 +45,8 @@ class DBUtils {
                     userupdate: null,
                     roleupdate: null,
                     voiceupdate: null,
-                    channelupdate: null
+                    channelupdate: null,
+                    booster: null
                 },
                 staff: {
                     helper: [],
