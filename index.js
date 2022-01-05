@@ -16,8 +16,7 @@ const intents = [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLA
     initUtils();
     await handleCommands(bot);
     await handleEvents(bot);
+    const env = process.env.NODE_ENV == 'PRODUCTION' ? 'PROD' : 'DEV';
+    bot.login(env == 'PROD' ? process.env.TOKEN : process.env.TEST_TOKEN);
 })();
 
-
-const env = process.env.NODE_ENV == 'PRODUCTION' ? 'PROD' : 'DEV';
-bot.login(env == 'PROD' ? process.env.TOKEN : process.env.TEST_TOKEN);

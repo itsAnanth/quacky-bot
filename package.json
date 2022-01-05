@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "NODE_ENV=PRODUCTION node --experimental-json-modules index.js",
+        "start": "node --experimental-json-modules index.js",
         "dev": "nodemon --experimental-json-modules --no-warnings=ExperimentalWarnings index.js"
     },
     "keywords": [],
