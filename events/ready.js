@@ -11,7 +11,7 @@ export default {
 
         if (env == 'PROD') {
             logger.debug('env set', 'PROD');
-            await bot.user.setPresence({ activities: [{ name: 'Quack Pack', type: 'WATCHING' }], status: 'online' });
+            await bot.user.setPresence({ activities: [{ name: 'Quack Pack', type: 'WATCHING' }], status: 'idle' });
             logger.info('Ready!');
             // load(bot);
             await logger.init(bot);
