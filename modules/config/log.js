@@ -41,6 +41,11 @@ const menuOptions = [{
     label: 'Mute',
     description: 'logs user mutes done via the bot',
     value: 'mute',
+},
+{
+    label: 'Channel update',
+    description: 'logs channel updates',
+    value: 'channelupdate',
 }];
 
 export default {
