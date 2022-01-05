@@ -4,6 +4,7 @@ import db from '../modules/db/server.js';
 export default {
     name: 'messageDelete',
     execute: async(bot, m) => {
+        if (m.author.bot) return;
         const Lchannels = await db.utils.log_channels();
         const mId = Lchannels.message;
         if (!mId) return;
