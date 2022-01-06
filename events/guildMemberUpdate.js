@@ -4,8 +4,8 @@ import db from '../modules/db/server.js';
 export default {
     name: 'guildMemberUpdate',
     execute: async(bot, oldMember, newMember) => {
-        if (oldMember.premiumSince != newMember.premiumSince)
-            handleBooster(bot, oldMember, newMember);
+//         if (oldMember.premiumSince != newMember.premiumSince)
+//             handleBooster(bot, oldMember, newMember);
         if (oldMember.roles.cache.size != newMember.roles.cache.size)
             handleRoleUpdate(bot, oldMember, newMember);
         else if (oldMember.nickname != newMember.nickname)
