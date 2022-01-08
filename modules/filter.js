@@ -23,16 +23,16 @@ export default {
 
         const filter = await db.utils.filter.get();
         const str = message.content.toLowerCase();
-        const filtered = str.replaceAll(/\s/g, '');
-
+        const filtered = String(str.replaceAll(/\s/g, ''));
         console.log(filtered);
+        // if (!filtered) return false;
         const roleW = await db.utils.filter.getWhitelistRole();
 
         const idx = getIndex();
 
         if (idx != -1) {
             for (let i = 0; i < roleW[idx].words.length; i++)
-                if (filtered.find(x => x[0].includes(roleW[idx].words[i]))) return false;
+                if (filtered.includes([0].includes(roleW[idx].words[i]))) return false;
         }
         // if (filtered.length != copy.replace(/[^\x00-\x7F]/g, '')) return true;
         // for (let i = 0; i < filter.length; i++)
