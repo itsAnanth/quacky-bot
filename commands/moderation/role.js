@@ -17,7 +17,6 @@ export default {
         if (!user) return message.replyEmbed(null, 'RED', 'Unknown User');
 
         const role = message.guild.roles.cache.find(x => x.name == args.slice(1, args.length).join(' ')) || message.guild.roles.cache.get(args[1].replace(/\D/g, ''));
-        console.log(args.slice(2, args.length).join(''));
         if (!role) return message.replyEmbed(null, 'RED', 'Unknown Role');
 
 

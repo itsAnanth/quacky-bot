@@ -14,7 +14,6 @@ export default {
     required: { permissions: [Permissions.FLAGS.MODERATE_MEMBERS] },
     staff: ['helper', 'admin', 'mod'],
     execute: async function(message, args, bot, bypass) {
-        console.log(args);
         if (!args[0]) return message.replyEmbed(null, 'RED', `Missing user\n\`${this.excpectedArgs}\``);
         if (!args[1]) return message.replyEmbed(null, 'RED', `Missing time argument\n\`${this.excpectedArgs}\``);
         const user = await message.getMember(args[0]);

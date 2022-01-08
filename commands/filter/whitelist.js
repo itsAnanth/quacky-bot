@@ -22,6 +22,5 @@ export default {
         const success = await db.utils.filter.whitelistRole(role.id, word);
         if (!success) return message.replyEmbed(null, 'RED', 'Role already exists in whitelist');
         message.replyEmbed(null, 'GREEN', `Successfully whitelisted the word \`${word}\` for ${Formatters.roleMention(role.id)}`);
-        console.log(await db.utils.filter.getWhitelistRole());
     }
 };

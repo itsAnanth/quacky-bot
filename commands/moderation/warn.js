@@ -32,7 +32,7 @@ export default {
                 const time = warns.lt;
                 const now = Date.now();
                 if (Math.abs(time - now) >= core.warn.time * 60 * 1000) {
-                    console.log('resetting bans');
+                    console.log('resetting warns');
                     await db.utils.resetMod(message.author.id, 'warn');
                     stateCount = 0;
                 }

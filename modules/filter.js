@@ -25,8 +25,7 @@ export default {
         const str = message.content.toLowerCase();
         const filtered = str.replaceAll(/\s/g, '');
 
-        console.log(filter);
-
+        console.log(filtered);
         const roleW = await db.utils.filter.getWhitelistRole();
 
         const idx = getIndex();

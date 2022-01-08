@@ -22,7 +22,6 @@ async function handleChannelUpdate(bot, oldChannel, newChannel) {
 
     const channelLog = fetchedLogs.entries.first();
     if (!channelLog) return;
-    console.log(channelLog);
     const change = channelLog.changes[0];
 
 
