@@ -16,7 +16,7 @@ export default {
         if (!args[1]) return message.replyEmbed(null, 'RED', `Missing argument\n\`${this.excpectedArgs}\``);
         if (!args[2]) return message.replyEmbed(null, 'RED', `Missing argument\n\`${this.excpectedArgs}\``);
 
-        const emoteId = args[2].replace(/\D/g, '');
+        const emoteId = args[2].replaceAll(/\D/g, '');
         const emote = message.guild.emojis.cache.get(emoteId);
         const role = message.guild.roles.cache.get(args[1].replace(/\D/g, ''));
         if (!role) return message.replyEmbed(null, 'RED', 'Invalid Role');
