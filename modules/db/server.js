@@ -101,6 +101,16 @@ class DBUtils {
         return serialized;
     }
 
+    async delete_event_msg(id) {
+        const res = await this.get();
+
+        res.event.messages.weekly[id] = 0;
+        res.event.messages.alltime[id] = 0;
+
+        await this.keyv.set(core['server-db-cluster'], res);
+        return res;
+    }
+
     async set_event_msg(id) {
         const res = await this.get();
         if (!res.event.messages.weekly[id]) res.event.messages.weekly[id] = 0;
