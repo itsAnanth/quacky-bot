@@ -1,4 +1,4 @@
-import { Permissions, MessageEmbed } from 'discord.js';
+import { Permissions, MessageEmbed, Message } from 'discord.js';
 import { core } from '../../data/index.js';
 import db from '../../modules/db/main.js';
 import serverdb from '../../modules/db/server.js';
@@ -8,18 +8,18 @@ export default {
     aliases: ['unban'],
     cooldown: 0,
     descriptions: 'Unbans a user',
-    excpectedArgs: `${core.prefix}unban [ID / @user] (reason | optional)`,
+    excpectedArgs: `${core.prefix}unban [ID / @user]`,
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.BAN_MEMBERS] },
     staff: ['admin', 'mod'],
-    execute: async function(message, args, bot, bypass) {
+    execute: async function(/** @type {Message} */message, args, bot, bypass) {
         if (!args[0]) return message.replyEmbed(null, 'RED', `Error : Missing argument\n\`${this.excpectedArgs}\``);
 
         const user = await message.getUser(args[0]);
 
         if (!user) return message.replyEmbed(null, 'RED', 'Invalid User');
 
-        const bans = await message.guild.fetchBans();
+        const bans = await message.guild.bans.fetch();
         if (bans.size == 0) return message.replyEmbed(null, 'RED', 'There are no bans in this server');
         const bUser = bans.find(b => b.user.id == user.id);
         if (!bUser) return message.replyEmbed(null, 'RED', `Could not find user with id ${user.id} in guild bans`);
