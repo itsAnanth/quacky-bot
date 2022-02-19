@@ -17,10 +17,11 @@ export default {
     bypass: { permissions: [Permissions.FLAGS.MANAGE_MESSAGES] },
     staff: ['admin', 'mod'],
     execute: async function(message, bot) {
+        // console.log(await isStaff(this, message))
         if (await isStaff(this, message)) return false;
         // if (userHasPermission(message, this.bypass.permissions)) return false;
         if (await checkMentions(message, bot)) return true;
-
+        if (await checkLineBreaks(message, bot)) return true;
         const filter = await db.utils.filter.get();
         const str = message.content.toLowerCase();
         const filtered = String(str.replaceAll(/\s/g, ''));
@@ -59,6 +60,13 @@ export default {
         }
     }
 };
+
+async function checkLineBreaks(message, bot) {
+    const linebreaks = message.content.split(/\r\n|\r|\n/).length;
+    if (linebreaks > 5)
+        return true;
+    return false;
+}
 
 async function checkMentions(message, bot) {
     const mentionsSize = message.content.match(/<@(&|!)?\d+>/gm)?.length || 0;
