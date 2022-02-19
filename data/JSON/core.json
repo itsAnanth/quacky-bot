@@ -1,6 +1,6 @@
 {
     "prefix": ".",
-    "page-break": 5,
+    "page-break": 10,
     "server-db-cluster": "1",
     "timeouts": {
         "lock&unlock": 20000
