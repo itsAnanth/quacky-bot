@@ -8,7 +8,7 @@ export default {
     aliases: ['unban'],
     cooldown: 0,
     descriptions: 'Unbans a user',
-    excpectedArgs: `${core.prefix}ban [ID / @user] (reason | optional)`,
+    excpectedArgs: `${core.prefix}unban [ID / @user] (reason | optional)`,
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.BAN_MEMBERS] },
     staff: ['admin', 'mod'],
