@@ -14,17 +14,17 @@ export default {
             await bot.user.setPresence({ activities: [{ name: 'Quack Pack', type: 'WATCHING' }], status: 'idle' });
             logger.info('Ready!');
             // load(bot);
-            // await logger.init(bot);
-            // const logChannel = bot.channels.resolve(id.channels.logs);
-            // if (logChannel) {
-            //     logChannel.send({
-            //         embeds: [new MessageEmbed()
-            //             .setDescription(`\`\`\`diff\n+ Logged in as ${bot.user.username}\n- Version : ${core.version}\`\`\`\nDatabase: KeyvHQ-Redis, KeyvHQ-Mongo\nstatus: connected <a:check:827647433445474314>`)
-            //             .setTimestamp()]
-            //     }).catch(console.error);
-            // }
+            await logger.init(bot);
+            const logChannel = bot.channels.resolve(id.channels.logs);
+            if (logChannel) {
+                logChannel.send({
+                    embeds: [new MessageEmbed()
+                        .setDescription(`\`\`\`diff\n+ Logged in as ${bot.user.username}\n- Version : ${core.version}\`\`\`\nDatabase: KeyvHQ-Redis, KeyvHQ-Mongo\nstatus: connected <a:check:827647433445474314>`)
+                        .setTimestamp()]
+                }).catch(console.error);
+            }
 
-            // process.on('unhandledRejection', logger.unhandledError);
+            process.on('unhandledRejection', logger.unhandledError);
             process.on('SIGTERM', async() => {
                 const presence = await bot.user.setPresence({ activities: [{ name: 'SHUTTING DOWN', type: 'WATCHING' }], status: 'dnd' });
                 if (!presence) {

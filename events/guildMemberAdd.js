@@ -15,7 +15,7 @@ export default {
             .setColor('GREEN')
             .setDescription(
                 `**Name:** ${m.user.username}
-                \n**User ID:** ${m.id}
+                \n**User ID:** <@${m.id}>
                 \n**Created At:** ${Formatters.time(m.user.createdAt)}`)
             .setFooter({ text: `Member Count: ${m.guild.memberCount}` })
             .setTimestamp();
