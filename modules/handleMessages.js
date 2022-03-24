@@ -12,7 +12,7 @@ export default async function(bot, message) {
     if (!data) {
         await db.utils.set_event_msg(message.author.id);
         bot.eventCooldown[id] = Date.now();
-    } else if (Math.abs(now - data) >= 5000)
+    } else if (Math.abs(now - data) >= 1000)
         delete bot.eventCooldown[id];
 }
 
