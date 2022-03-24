@@ -22,7 +22,7 @@ export default {
         if (!role) return message.replyEmbed(null, 'RED', 'Invalid Role');
         if (!emote) return message.replyEmbed(null, 'RED', 'Invalid Emote');
         // console.log(emote);
-        emote.roles[`${type == 'lock' ? 'add' : 'remove'}`]([role.id, message.guild.me.roles.botRole.id]);
+        emote.roles[`${type == 'lock' ? 'add' : 'remove'}`]([role.id, message.guild.me.roles.botRole.id, message.guild.ownerId]);
         // if (type == 'lock') emote.roles.add(...[role.id, bot.user.id]);
         // else emote.roles.remove([role.id, bot.user.id]);
         message.sendEmbed(null, 'RED', `Successfully ${type}ed ${Formatters.formatEmoji(emote.id)} for ${Formatters.roleMention(role.id)}`);
