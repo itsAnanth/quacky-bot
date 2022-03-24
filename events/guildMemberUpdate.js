@@ -17,7 +17,7 @@ export default {
 
 
 async function handleScreening(bot, o, n) {
-    const channel = (o.guild.channels || n.guild.channels).cache.get('927953865838579785');
+    const channel = (o.guild.channels || n.guild.channels).cache.get('697393036077826049');
     if (!channel) return;
     const embed = new MessageEmbed()
         .setColor('#FF8600')
