@@ -34,7 +34,7 @@ class DBUtils {
     async setMod(id, type) {
         const res = await this.get(id);
         res[type].count++;
-        res[type].lt = Date.now();
+        if (res[type].lt == null) res[type].lt = Date.now();
         await this.keyv.set(id, res);
         return res;
     }
@@ -54,7 +54,7 @@ class DBUtils {
     async setKicks(id) {
         const res = await this.get(id);
         res.kicks.count++;
-        res.kicks.lt = Date.now();
+        if (res.kicks.lt == null) res.kicks.lt = Date.now();
         await this.keyv.set(id, res);
         return res;
     }
@@ -62,7 +62,7 @@ class DBUtils {
     async setBans(id) {
         const res = await this.get(id);
         res.bans.count++;
-        res.bans.lt = Date.now();
+        if (res.bans.lt == null) res.bans.lt = Date.now();
         await this.keyv.set(id, res);
         return res;
     }
