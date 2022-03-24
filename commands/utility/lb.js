@@ -16,6 +16,7 @@ export default {
     useOnly: { permissions: [], roles: [] },
     staff: [],
     execute: async function(message, args, bot) {
+        if (message.channel.id == '697393036077826049') return;
         const meta = [db.utils.get_event_msg.bind(db.utils), db.utils.get_alltime_msg.bind(db.utils)];
         const embed = new MessageEmbed()
             .setAuthor({ name: message.author.username, iconURL: message.author.avatarURL() })
