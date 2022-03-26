@@ -17,7 +17,7 @@ export default async function(bot, message) {
 }
 
 async function resetDB() {
-    const job = new CronJob('1 1 1 * * 0', async() => { // Every Sunday at approx. 1am
+    const job = new CronJob('1 1 1 * * 1', async() => { // Every Sunday at approx. 1am
         await db.utils.reset_event_msg();
     }, null, true, 'Europe/London');
     job.start();
