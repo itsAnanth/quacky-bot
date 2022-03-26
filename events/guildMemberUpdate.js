@@ -23,7 +23,7 @@ async function handleScreening(bot, o, n) {
         .setColor('#FF8600')
         .setAuthor({ name: `Welcome ${o.user.tag}`, iconURL: 'https://images-ext-2.discordapp.net/external/mxgXDBnPaVN6O7yiPmS-H4f0ss1aiEQo9NnGO_A1TRc/https/media.discordapp.net/attachments/714445203318112256/956596676624252928/hello.gif' })
         .setThumbnail(n.user.displayAvatarURL({ dynamic: true }))
-        .setDescription(`To fully understand the server, we strongly suggest recommend that you: \n\n\`1.\` Read the ${Formatters.channelMention('817672264292106240')}\n\`2.\` Select your roles in ${Formatters.channelMention('722708128948420649')}\n\`3.\` Introduce yourself ${Formatters.channelMention('955343973638082561')}`)
+        .setDescription(`To fully understand the server, we strongly recommend that you: \n\n\`1.\` Read the ${Formatters.channelMention('817672264292106240')}\n\`2.\` Select your roles in ${Formatters.channelMention('722708128948420649')}\n\`3.\` Introduce yourself ${Formatters.channelMention('955343973638082561')}`)
         .setFooter({ text: 'Welcome them to The Quack Pack!', iconURL: 'https://media.discordapp.net/attachments/714445203318112256/956597062844166204/893165570015b53aad1a6999d13ea7d8.png' });
     await channel.send({ content: `${Formatters.userMention(o.id)}`, embeds: [embed] });
 }
