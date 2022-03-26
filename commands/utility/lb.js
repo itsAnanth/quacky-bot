@@ -51,7 +51,7 @@ export default {
             const paginator = new Paginator(bot, message.channel, options, async(i, dat) => {
                 const final = [...data].slice(i, i + core['page-break']);
                 const lbembed = new MessageEmbed()
-                    .setFooter({ text: `${type == 0 ? 'LB resets in ' + timeRemaining() : ''}\n${dat.page} out of ${lastPage == 0 ? 1 : lastPage}` })
+                    .setFooter({ text: `${type == 0 ? 'LB resets at ' + timeRemaining() : ''}\n${dat.page} out of ${lastPage == 0 ? 1 : lastPage}` })
                     .setTitle(`${type == 0 ? 'Weekly' : 'All Time'} Messages Leaderboard`)
                     .setColor(core.embed)
                     .setDescription(final.join('\n'));
@@ -79,5 +79,6 @@ function timeRemaining() {
         }
     }
 
-    return msToDHM(tt);
+//     return msToDHM(tt);
+    return cronInstance.schedule().next();
 }
