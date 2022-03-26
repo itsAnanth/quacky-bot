@@ -64,7 +64,7 @@ export default {
 };
 
 function timeRemaining() {
-    cronInstance.fromString('1 1 1 * * 0');
+    cronInstance.fromString('1 1 * * 0');
     const tt = Date.parse(cronInstance.schedule().next()) - Date.now();
 
     function msToDHM(v) {
