@@ -8,7 +8,8 @@ export default {
     cooldown: 0,
     descriptions: 'Displays all staff roles of the server',
     excpectedArgs: `${core.prefix}staff`,
-    useOnly: { permissions: [Permissions.FLAGS.ADMINISTRATOR], roles: [] },
+    useOnly: { permissions: [], roles: [] },
+    staff: ['helper', 'mod', 'admin'],
     execute: async(message, args, bot) => {
         const mods = (await db.utils.staff.get_mod()).map(v => `${Formatters.roleMention(v)} | \`mod\``);
         const helper = (await db.utils.staff.get_helper()).map(v => `${Formatters.roleMention(v)} | \`helper\``);
