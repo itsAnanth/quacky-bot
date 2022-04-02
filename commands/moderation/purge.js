@@ -10,7 +10,7 @@ export default {
     excpectedArgs: `${core.prefix}purge [number] [userID/@user optional]`,
     useOnly: { permissions: [], roles: [] },
     required: { permissions: [Permissions.FLAGS.MANAGE_MESSAGES] },
-    staff: ['admin'],
+    staff: ['helper', 'mod', 'admin'],
     execute: async function(message, args) {
         if (!args[0]) return message.reply(createEmbed(message.author, 'RED', 'Invalid argument | Missing message count to purge'));
         const count = parseInt(args[0]);
