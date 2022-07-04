@@ -17,7 +17,7 @@ export default {
                 `**Name:** ${m.user.username}
                 \n**User ID:** <@${m.id}>
                 \n**Created At:** ${Formatters.time(m.user.createdAt)}`)
-            .setFooter({ text: `Member Count: ${m.guild.memberCount}` })
+            .setFooter({ text: `Member Count: ${m.guild.memberCount}`, iconURL: 'https://media.discordapp.net/attachments/714445203318112256/993552409513168996/quack_hype_28.png' })
             .setTimestamp();
         await mC.send({ embeds: [embed] }).catch(console.error);
     }
