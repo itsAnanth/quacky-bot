@@ -25,7 +25,7 @@ export default {
         const filter = await db.utils.filter.get();
         const str = message.content.toLowerCase();
         const filtered = String(str.replaceAll(/\s/g, ''));
-        console.log(filtered);
+        //console.log(filtered);
         // if (!filtered) return false;
         const roleW = await db.utils.filter.getWhitelistRole();
 
