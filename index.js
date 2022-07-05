@@ -10,6 +10,7 @@ const intents = [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLA
 
 (async function() {
     global.logger = logger;
+    global.client = bot;
     await Cache.init();
     bot.eventCooldown = {};
     config();
