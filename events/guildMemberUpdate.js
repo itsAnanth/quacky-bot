@@ -27,8 +27,8 @@ async function handleScreening(bot, o, n) {
     if (!channel) return;
     const embed = new MessageEmbed()
         .setColor('#FF8600')
-        .setAuthor({ name: `Welcome ${o.user.tag}`, iconURL: 'https://images-ext-2.discordapp.net/external/mxgXDBnPaVN6O7yiPmS-H4f0ss1aiEQo9NnGO_A1TRc/https/media.discordapp.net/attachments/714445203318112256/956596676624252928/hello.gif' })
-        .setDescription(randmsg.replace('*', `**${o.user.tag}`))
+        .setAuthor({ name: `${o.user.tag}`, iconURL: n.user.displayAvatarURL({ dynamic: true }) })
+        .setDescription(randmsg.replace('*', `**${n.user.tag}`))
         .setFooter({ text: `Member #${o.guild.memberCount || n.guild.memberCount}`, iconURL: 'https://media.discordapp.net/attachments/714445203318112256/993552409513168996/quack_hype_28.png' });
     await channel.send({ embeds: [embed] });
 }
