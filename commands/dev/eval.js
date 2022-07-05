@@ -25,7 +25,7 @@ export default {
             if (typeof evaled !== 'string')
                 evaled = inspect(evaled);
             console.log(clean(evaled));
-            message.channel.send(clean(evaled), { code: 'xl' });
+            //message.channel.send(clean(evaled), { code: 'xl' });
         } catch (e) {
             message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(inspect(e))}\n\`\`\``);
         }
