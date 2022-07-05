@@ -18,9 +18,9 @@ export default {
 
 async function handleScreening(bot, o, n) {
     const msgs = [
-        'A wild * has appeared',
-        'Hey *, thanks for joining!',
-        '* stopped by for a drink'
+        "* has flocked into our server",
+        "* has come for a swim",
+        "look out * has waddled into our server!"
     ];
     const randmsg = msgs[Math.floor(Math.random() * msgs.length)];
     const channel = (o.guild.channels || n.guild.channels).cache.get('697393036077826049');
@@ -28,9 +28,9 @@ async function handleScreening(bot, o, n) {
     const embed = new MessageEmbed()
         .setColor('#FF8600')
         .setAuthor({ name: `Welcome ${o.user.tag}`, iconURL: 'https://images-ext-2.discordapp.net/external/mxgXDBnPaVN6O7yiPmS-H4f0ss1aiEQo9NnGO_A1TRc/https/media.discordapp.net/attachments/714445203318112256/956596676624252928/hello.gif' })
-        .setDescription(randmsg.replace('*', o.user.tag))
+        .setDescription(randmsg.replace('*', `**${o.user.tag}`))
         .setFooter({ text: `Member #${o.guild.memberCount || n.guild.memberCount}`, iconURL: 'https://media.discordapp.net/attachments/714445203318112256/993552409513168996/quack_hype_28.png' });
-    await channel.send({ content: `${Formatters.userMention(o.id)}`, embeds: [embed] });
+    await channel.send({ embeds: [embed] });
 }
 
 // eslint-disable-next-line no-unused-vars
