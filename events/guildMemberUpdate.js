@@ -30,7 +30,8 @@ async function handleScreening(bot, o, n) {
         .setAuthor({ name: `${o.user.tag}`, iconURL: n.user.displayAvatarURL({ dynamic: true }) })
         .setDescription(randmsg.replace('*', `**${n.user.tag}**`))
         .setFooter({ text: `Member #${o.guild.memberCount || n.guild.memberCount}`, iconURL: 'https://media.discordapp.net/attachments/714445203318112256/993552409513168996/quack_hype_28.png' });
-    await channel.send({ embeds: [embed] });
+    const msg = await channel.send({ embeds: [embed] });
+    msg.react('943416403111845898');
 }
 
 // eslint-disable-next-line no-unused-vars
